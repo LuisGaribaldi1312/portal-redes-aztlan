@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Interactivo de Redes de Computadoras | Universidad Aztlán</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+</head>
+<body>
+
+  <!-- ============================================================== -->
+  <!-- MODAL / PORTAL DE INICIO DE SESIÓN CENTRALIZADO               -->
+  <!-- ============================================================== -->
+    <div id="login-overlay" class="visible">
+    <canvas id="login-network-canvas"></canvas>
+    
+    <div class="login-cyber-wrapper">
+      <!-- Glow aura exterior animada con gradiente cónico 2026 -->
+      <div class="cyber-glow-aura"></div>
+
+      <div class="login-card">
+        <!-- Esquinas cibernéticas HUD 2026 -->
+        <span class="hud-corner hud-top-left"></span>
+        <span class="hud-corner hud-top-right"></span>
+        <span class="hud-corner hud-bottom-left"></span>
+        <span class="hud-corner hud-bottom-right"></span>
+
+        <!-- Cabecera de Marca Futurista 2026 -->
+        <div class="login-brand-header">
+          <div class="login-brand-logo-container">
+            <div class="login-brand-logo-orbit"></div>
+            <div class="login-brand-logo-orbit-reverse"></div>
+            <div class="login-brand-logo">🌐</div>
+          </div>
+          <div class="login-security-badge-top">
+            <span class="cyber-pulse-dot"></span> SECURE GATEWAY AZTLÁN-634
+          </div>
+          <h2 class="login-brand-title">UNIVERSIDAD AZTLÁN</h2>
+          <p class="login-brand-subtitle">Plataforma Educativa de Redes de Computadoras • Clave 634</p>
+        </div>
+
+        <!-- Fase 1: Formulario de Acceso Manual Seguro -->
+        <div id="login-form-box">
+          <div class="login-gateway-banner">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
+              <span class="gateway-tag">AUTENTICACIÓN INSTITUCIONAL RADIUS / LDAP</span>
+              <span class="gateway-status">EN LÍNEA 🟢</span>
+            </div>
+            <p class="gateway-instruction">Ingresa tus credenciales personales para acceder al laboratorio de redes.</p>
+          </div>
+
+          <div id="login-error-msg" class="login-error-banner" style="display: none;"></div>
+
+          <form onsubmit="event.preventDefault(); AuthSystem.submitLogin();" autocomplete="on">
+            <div class="form-group">
+              <label class="login-field-label">
+                <span>👤</span> Nombre de Usuario / Matrícula:
+              </label>
+              <div class="input-glow-wrapper">
+                <input type="text" class="form-control login-input" id="login-username" placeholder="Ingresa tu usuario institucional" autocomplete="username" required>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <label class="login-field-label" style="margin: 0;">
+                  <span>🔑</span> Contraseña Personal:
+                </label>
+                <button type="button" onclick="AuthSystem.togglePasswordVisibility()" class="toggle-pass-btn">
+                  <span id="eye-icon">👁️ Mostrar</span>
+                </button>
+              </div>
+              <div class="input-glow-wrapper">
+                <input type="password" class="form-control login-input" id="login-password" placeholder="••••••••••••" autocomplete="current-password" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-login-cyber-primary" id="btn-login-submit">
+              <span class="btn-cyber-content">
+                <span class="btn-icon">⚡</span> Iniciar Sesión en el Laboratorio
+              </span>
+              <span class="btn-cyber-shine"></span>
+            </button>
+          </form>
+
+          <div class="login-footer-security">
+            <div class="security-chip">
+              <span class="chip-icon">🔒</span> TLS 1.3 Cifrado Cuántico
+            </div>
+            <a href="javascript:void(0)" onclick="AuthSystem.showForgotPasswordModal()" class="forgot-pass-link">
+              ❓ ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+        </div>
+
+        <!-- Fase 2: Experiencia Cinemática Futurista 2026 -->
+        <div id="login-experience-stage" class="login-experience-stage">
+          <!-- Reactor Holográfico Cuántico 3D -->
+          <div class="quantum-hologram-viewport">
+            <div class="quantum-hologram-container">
+              <div class="quantum-gyro-ring ring-outer"></div>
+              <div class="quantum-gyro-ring ring-middle"></div>
+              <div class="quantum-gyro-ring ring-inner"></div>
+              <div class="quantum-laser-sweep"></div>
+              <div class="quantum-core-orb">
+                <span class="core-icon">🌐</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="telemetry-hud-header">
+            <div class="telemetry-status-pill">
+              <span class="pulse-ring"></span> CIFRADO BIOMÉTRICO ACTIVO
+            </div>
+            <h3 class="telemetry-main-title">ESTABLECIENDO HANDSHAKE DE RED 2026</h3>
+            <p class="telemetry-subtitle">Verificando canal criptográfico y telemetría de dominio...</p>
+          </div>
+
+          <!-- Barra de Progreso HUD con métricas de ancho de banda -->
+          <div class="hud-progress-wrapper">
+            <div class="hud-progress-metrics">
+              <span id="hud-status-phase">SINCRONIZANDO NODO</span>
+              <span id="hud-bandwidth-metric">40 Gbps • 0.3ms</span>
+              <span id="hud-percentage-metric">0%</span>
+            </div>
+            <div class="hud-progress-track">
+              <div class="hud-progress-bar" id="hud-progress-bar"></div>
+            </div>
+          </div>
+
+          <!-- Monitor de Telemetría en Vivo -->
+          <div class="login-terminal-logs" id="login-terminal-logs"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra Superior de Navegación Institucional -->
+  <header class="top-header">
+    <div class="brand-container">
+      <div class="brand-badge">
+        <span>🏛️</span> AZTLÁN
+      </div>
+      <div class="brand-info">
+        <h1>
+          REDES DE COMPUTADORAS 
+          <span class="sub-badge">CLAVE: 634</span>
+          <span class="sub-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--accent); border-color: rgba(16, 185, 129, 0.3);">6° CUATRIMESTRE</span>
+        </h1>
+        <p>Universidad Aztlán • Facultad de Ingeniería en Sistemas Computacionales • Ciclo 2026</p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <!-- Botón Toggle Modo Día / Noche -->
+      <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="App.toggleTheme()" title="Alternar Modo Día / Noche">
+        <span id="theme-toggle-icon">🌙</span> <span id="theme-toggle-text">Modo Noche</span>
+      </button>
+
+      <!-- Perfil de Usuario Dinámico -->
+      <div id="header-user-profile"></div>
+    </div>
+  </header>
+
+  <!-- Menú de Pestañas de Unidades Temáticas -->
+  <nav class="nav-tabs-wrapper">
+    <button class="nav-tab-btn active" data-view="dashboard">
+      <span>🏛️</span> Inicio & Rúbrica
+    </button>
+    <button class="nav-tab-btn" data-view="labs" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2)); border: 1px solid #10b981; color: #6ee7b7;">
+      <span>🧪</span> Laboratorio de Prácticas de Red
+    </button>
+    <button class="nav-tab-btn" data-view="workshop" style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(99, 102, 241, 0.2)); border: 1px solid var(--primary-light);">
+      <span>🎯</span> Taller de Ejercicios Visuales (100)
+    </button>
+    <button class="nav-tab-btn" data-view="u1">
+      <span class="badge-unit">U1</span> Aspectos Básicos & Topologías
+    </button>
+    <button class="nav-tab-btn" data-view="u2">
+      <span class="badge-unit">U2</span> Normas, OSI & TCP/IP
+    </button>
+    <button class="nav-tab-btn" data-view="u3">
+      <span class="badge-unit">U3</span> Dispositivos de Red
+    </button>
+    <button class="nav-tab-btn" data-view="u4">
+      <span class="badge-unit">U4</span> Cableado Estructurado
+    </button>
+    <button class="nav-tab-btn" data-view="u5">
+      <span class="badge-unit">U5</span> Planificación & Diseño
+    </button>
+    <button class="nav-tab-btn" data-view="exam">
+      <span>📝</span> Examen Final & Evaluación
+    </button>
+    <button class="nav-tab-btn" id="nav-tab-admin" data-view="admin" style="display: none; background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #fbbf24;">
+      <span>👑</span> Panel Docente
+    </button>
+  </nav>
+
+  <!-- Contenedor Principal -->
+  <main class="main-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- VISTA DASHBOARD: PRESENTACIÓN, COMPETENCIAS & RÚBRICA OFICIAL  -->
+    <!-- ============================================================== -->
+    <section id="view-dashboard" class="view-panel active">
+      
+      <!-- Hero de Bienvenida -->
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.05em;">Portal de Aprendizaje Visual e Interactivo</span>
+            <h2 class="hero-title">Laboratorio Virtual de Redes de Computadoras</h2>
+            <p class="hero-desc">
+              Bienvenido al entorno interactivo de simulación, experimentación y validación técnica para la asignatura 
+              <strong>Redes de Computadoras (Clave 634)</strong>. Diseñado para que conozcas, analices y apliques los componentes 
+              físicos y lógicos involucrados en la planeación, diseño e instalación de redes corporativas.
+            </p>
+            
+            <div class="controls-toolbar">
+              <button class="btn btn-primary" onclick="App.navigateTo('labs')" style="background: linear-gradient(135deg, #10b981, #0284c7); border: none; font-weight: 700;">
+                <span>🧪</span> Zona de Prácticas Activas (Laboratorio en Vivo)
+              </button>
+              <button class="btn" onclick="App.navigateTo('workshop')">
+                <span>🎯</span> Taller de 100 Ejercicios Visuales
+              </button>
+              <button class="btn" onclick="App.navigateTo('u1')">
+                <span>🚀</span> Topologías (U1)
+              </button>
+              <button class="btn" onclick="App.navigateTo('u4')">
+                <span>🛠️</span> Taller de Cableado RJ-45
+              </button>
+              <button class="btn" onclick="App.navigateTo('exam')">
+                <span>📝</span> Simulador de Examen
+              </button>
+            </div>
+          </div>
+
+          <!-- Tarjeta de Rúbrica Oficial de Evaluación -->
+          <div class="rubric-card">
+            <div class="rubric-header">
+              <span>⚖️</span> Criterios de Evaluación Oficial
+            </div>
+            <div class="rubric-bar">
+              <div class="rubric-segment" style="width: 20%; background: #0284c7;" title="Reportes de lectura (20%)">20%</div>
+              <div class="rubric-segment" style="width: 30%; background: #6366f1;" title="Investigación (30%)">30%</div>
+              <div class="rubric-segment" style="width: 20%; background: #06b6d4;" title="Exámenes parciales (20%)">20%</div>
+              <div class="rubric-segment" style="width: 30%; background: #10b981;" title="Examen final (30%)">30%</div>
+            </div>
+            <div class="rubric-legend">
+              <div class="rubric-item">
+                <span class="rubric-color-dot" style="background: #0284c7;"></span>
+                <span>Lecturas: <strong>20%</strong></span>
+              </div>
+              <div class="rubric-item">
+                <span class="rubric-color-dot" style="background: #6366f1;"></span>
+                <span>Investigación: <strong>30%</strong></span>
+              </div>
+              <div class="rubric-item">
+                <span class="rubric-color-dot" style="background: #06b6d4;"></span>
+                <span>Parciales: <strong>20%</strong></span>
+              </div>
+              <div class="rubric-item">
+                <span class="rubric-color-dot" style="background: #10b981;"></span>
+                <span>Examen Final: <strong>30%</strong></span>
+              </div>
+            </div>
+            <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border); font-size: 0.82rem; text-align: center;" id="rubric-global-status">
+              <span style="color: var(--accent-warn);">Estado: Calculando acreditación...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadatos de la Asignatura -->
+        <div class="hero-meta-grid">
+          <div class="hero-meta-item">
+            <div class="label">Competencia Específica</div>
+            <div class="val">Metodologías de análisis, diseño e instalación</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="label">Intención Didáctica</div>
+            <div class="val">5 Unidades conceptuales y prácticas</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="label">Unidad Integradora</div>
+            <div class="val">Unidad 5 (Proyecto de Red Organizacional)</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="label">Perfil Docente</div>
+            <div class="val">Ingeniería en Sistemas / Experiencia Universitaria</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuadrícula de Unidades del Temario -->
+      <div style="margin-bottom: 1rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+          Mapa Temático del Programa de Estudios
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Explora los contenidos oficiales de cada unidad y sus laboratorios de simulación asociados.
+        </p>
+      </div>
+
+      <div class="units-grid">
+        <!-- Unidad 1 -->
+        <div class="unit-card" onclick="App.navigateTo('u1')">
+          <div>
+            <div class="unit-card-header">
+              <span class="unit-num-badge">UNIDAD 1</span>
+              <span style="font-size: 1.2rem;">📡</span>
+            </div>
+            <h3>1. Aspectos básicos de Redes</h3>
+            <p>Evolución histórica, fundamentos de transmisión, clasificación geográfica y topologías físicas vs lógicas.</p>
+            <ul class="unit-topics-list">
+              <li>1.1 Orígenes y evolución (ARPANET a 2026)</li>
+              <li>1.2 Conceptos básicos de redes y medios</li>
+              <li>1.3 Clasificación: PAN, LAN, MAN, WAN, SAN</li>
+              <li>1.4 Topologías: Estrella, Bus, Anillo, Malla, Árbol</li>
+            </ul>
+          </div>
+          <div class="unit-card-footer">
+            <span class="status-badge pending">Simulador Disponible</span>
+            <span style="color: var(--primary-light); font-weight: bold;">Explorar →</span>
+          </div>
+        </div>
+
+        <!-- Unidad 2 -->
+        <div class="unit-card" onclick="App.navigateTo('u2')">
+          <div>
+            <div class="unit-card-header">
+              <span class="unit-num-badge">UNIDAD 2</span>
+              <span style="font-size: 1.2rem;">📑</span>
+            </div>
+            <h3>2. Normas y estándares</h3>
+            <p>Modelos de referencia de 7 y 4 capas, comités internacionales IEEE 802 y flujo de encapsulamiento.</p>
+            <ul class="unit-topics-list">
+              <li>2.1 Modelo OSI (7 Capas y PDUs)</li>
+              <li>2.2 Modelo TCP/IP (4 Capas)</li>
+              <li>2.3 Comité IEEE 802 (802.3, 802.11, etc.)</li>
+              <li>2.4 Encapsulamiento y flujo de datos</li>
+            </ul>
+          </div>
+          <div class="unit-card-footer">
+            <span class="status-badge pending">Simulador Disponible</span>
+            <span style="color: var(--primary-light); font-weight: bold;">Explorar →</span>
+          </div>
+        </div>
+
+        <!-- Unidad 3 -->
+        <div class="unit-card" onclick="App.navigateTo('u3')">
+          <div>
+            <div class="unit-card-header">
+              <span class="unit-num-badge">UNIDAD 3</span>
+              <span style="font-size: 1.2rem;">🔌</span>
+            </div>
+            <h3>3. Dispositivos de red</h3>
+            <p>Equipos activos y pasivos, análisis de funcionamiento por capas OSI, tabla CAM y enrutamiento IP.</p>
+            <ul class="unit-topics-list">
+              <li>3.1 Dispositivos activos vs pasivos</li>
+              <li>3.2 Capa física: Repetidor y Hub</li>
+              <li>3.3 Capa enlace: Switch, Bridge, NIC y CAM</li>
+              <li>3.4 Capa de red: Router y dominios de difusión</li>
+              <li>3.5 Capas superiores: Firewall, Proxy, Gateway</li>
+            </ul>
+          </div>
+          <div class="unit-card-footer">
+            <span class="status-badge pending">Simulador Disponible</span>
+            <span style="color: var(--primary-light); font-weight: bold;">Explorar →</span>
+          </div>
+        </div>
+
+        <!-- Unidad 4 -->
+        <div class="unit-card" onclick="App.navigateTo('u4')">
+          <div>
+            <div class="unit-card-header">
+              <span class="unit-num-badge">UNIDAD 4</span>
+              <span style="font-size: 1.2rem;">🛠️</span>
+            </div>
+            <h3>4. Cableado Estructurado</h3>
+            <p>Normas internacionales TIA/EIA, los 6 subsistemas, código de colores T568A/B y memoria técnica.</p>
+            <ul class="unit-topics-list">
+              <li>4.1 Normas TIA/EIA-568, 569, 606, 607</li>
+              <li>4.2 Componentes, herramientas y crimpeado</li>
+              <li>4.3 Identificación, rotulado y memoria técnica</li>
+            </ul>
+          </div>
+          <div class="unit-card-footer">
+            <span class="status-badge pending">Taller RJ-45 Disponible</span>
+            <span style="color: var(--primary-light); font-weight: bold;">Explorar →</span>
+          </div>
+        </div>
+
+        <!-- Unidad 5 -->
+        <div class="unit-card" onclick="App.navigateTo('u5')">
+          <div>
+            <div class="unit-card-header">
+              <span class="unit-num-badge">UNIDAD 5</span>
+              <span style="font-size: 1.2rem;">🏗️</span>
+            </div>
+            <h3>5. Planificación y diseño</h3>
+            <p>Unidad Integradora: Metodología de análisis de necesidades, dimensionamiento de racks, subredes IPv4 y memoria técnica.</p>
+            <ul class="unit-topics-list">
+              <li>5.1 Análisis de requerimientos y usuarios</li>
+              <li>5.2 Diseño del cableado y cuartos de telecom</li>
+              <li>5.3 Selección de equipos y servidores</li>
+              <li>5.4 Direccionamiento IPv4 / Subnetting VLSM</li>
+              <li>5.5 Sistemas Operativos de Red y Pruebas</li>
+            </ul>
+          </div>
+          <div class="unit-card-footer">
+            <span class="status-badge pending">Proyecto Integrador</span>
+            <span style="color: var(--primary-light); font-weight: bold;">Explorar →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- VISTA UNIDAD 1: ASPECTOS BÁSICOS & SIMULADOR DE TOPOLOGÍAS     -->
+    <!-- ============================================================== -->
+    <section id="view-u1" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">UNIDAD 1 • TEMAS 1.1 AL 1.4</span>
+            <h2><span>📡</span> Aspectos Básicos de Redes & Simulador de Topologías</h2>
+            <p>Experimenta con la tolerancia a fallos, enrutamiento de paquetes y cálculo de enlaces físicos.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-sm btn-accent" onclick="App.navigateTo('labs'); NetworkLabs.selectLab('u1');"><span>🧪</span> Zona de Práctica U1 (Máquinas & Fallas) →</button>
+            <button class="btn btn-sm" onclick="topoSim.loadTopology('star')">Estrella (Switch)</button>
+            <button class="btn btn-sm" onclick="topoSim.loadTopology('bus')">Bus (Coaxial)</button>
+            <button class="btn btn-sm" onclick="topoSim.loadTopology('ring')">Anillo (Token)</button>
+            <button class="btn btn-sm" onclick="topoSim.loadTopology('mesh')">Malla (Full Mesh)</button>
+            <button class="btn btn-sm" onclick="topoSim.loadTopology('tree')">Árbol (Jerárquica)</button>
+            <button class="btn btn-sm btn-primary" onclick="topoSim.sendPing()"><span>⚡</span> Enviar Ping ICMP</button>
+          </div>
+        </div>
+
+        <!-- Lienzo Interactivo Canvas -->
+        <div class="simulator-box">
+          <div class="canvas-container">
+            <canvas id="topo-canvas"></canvas>
+            <div class="canvas-overlay-panel">
+              <div>
+                <strong>💡 Tip Interactivo:</strong> Haz <strong>Shift + Clic</strong> sobre cualquier nodo para simular una falla (apagarlo) y ver si el paquete encuentra una ruta alternativa.
+              </div>
+              <div>
+                Arrastra cualquier nodo con el ratón para reorganizar la vista.
+              </div>
+            </div>
+          </div>
+          <div class="console-log-box" id="topo-log">
+            <div class="log-line log-info"><span class="log-time">[00:00:00]</span> Simulador de Topologías de Red inicializado. Listo para enviar tramas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuadrículas Teóricas de Apoyo Unidad 1 -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        
+        <!-- 1.1 Evolución & Fundamentos Históricos -->
+        <div class="calc-results-card">
+          <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>⏳</span> 1.1 Evolución, Conmutación & Leyes de Red
+          </h4>
+          <ul style="list-style: none; font-size: 0.82rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.8rem;">
+            <li><strong style="color: var(--text-main);">1969 (ARPANET):</strong> Primera red de conmutación de paquetes por DARPA conectando 4 nodos universitarios (UCLA, Stanford, UCSB, Utah) mediante procesadores IMP (RFC 1).</li>
+            <li><strong style="color: var(--text-main);">Conmutación de Paquetes vs Circuitos:</strong> La telefonía tradicional reserva canales continuos dedicados (circuitos); Internet fragmenta la información en paquetes autónomos con cabeceras que comparten dinámicamente enlaces por multiplexación estadística.</li>
+            <li><strong style="color: var(--text-main);">1973 (Ethernet):</strong> Robert Metcalfe concibe en Xerox PARC la transmisión por medio compartido y formula la <strong>Ley de Metcalfe:</strong> El valor de una red crece proporcionalmente al cuadrado de sus nodos ($V \propto n^2$).</li>
+            <li><strong style="color: var(--text-main);">1983 (Nacimiento de Internet):</strong> ARPANET migra formalmente del protocolo NCP a la suite TCP/IP (Día Flag, 1 de enero).</li>
+            <li><strong style="color: var(--text-main);">1991 (World Wide Web):</strong> Tim Berners-Lee publica HTTP, HTML y URL en el CERN, democratizando el acceso global.</li>
+          </ul>
+          <div style="background: rgba(2,132,199,0.1); border-left: 3px solid #0284c7; padding: 0.5rem 0.8rem; border-radius: 4px; font-size: 0.78rem; color: #bae6fd;">
+            <strong>📌 Cultura RFC (Request for Comments):</strong> Estándares abiertos y transparentes administrados por el IETF (RFC 791 para IPv4, RFC 793 para TCP).
+          </div>
+        </div>
+
+        <!-- 1.2 Comunicación de Datos & Teoría de Señales -->
+        <div class="calc-results-card">
+          <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>📊</span> 1.2 Transmisión, Señales & Teoremas de Capacidad
+          </h4>
+          <div style="display: grid; gap: 0.6rem; font-size: 0.82rem;">
+            <div style="background: var(--bg-card); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #38bdf8;">Teorema de Nyquist (Canal sin Ruido):</strong>
+              <div style="font-family: monospace; color: #a5f3fc; margin: 0.2rem 0;">C = 2 · B · log₂(M)</div>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Establece que en un canal de ancho de banda $B$ con $M$ niveles de señalización discretos, la tasa máxima está limitada por la frecuencia de muestreo.</span>
+            </div>
+            <div style="background: var(--bg-card); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #34d399;">Teorema de Shannon-Hartley (Canal con Ruido Térmico):</strong>
+              <div style="font-family: monospace; color: #6ee7b7; margin: 0.2rem 0;">C = B · log₂(1 + S/N)</div>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Fija la cota máxima teórica insuperable de bits sin error en presencia de ruido gaussiano blanco, donde $S/N$ es la relación Señal a Ruido (SNR).</span>
+            </div>
+            <div style="background: var(--bg-card); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #fbbf24;">Modos de Transmisión Física:</strong>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; margin-top: 0.3rem; font-size: 0.75rem;">
+                <span style="background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 4px; text-align: center;"><strong>Simplex:</strong> Unidireccional (Radio/TV)</span>
+                <span style="background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 4px; text-align: center;"><strong>Half-Dúplex:</strong> Ambos pero alternado (Walkie/Hub)</span>
+                <span style="background: #1e293b; padding: 0.2rem 0.4rem; border-radius: 4px; text-align: center;"><strong>Full-Dúplex:</strong> Simultáneo bidireccional (Switch/Teléfono)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 Clasificación Integral de Redes -->
+        <div class="calc-results-card">
+          <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🗺️</span> 1.3 Clasificación por Cobertura, Acceso & Transmisión
+          </h4>
+          <div style="display: grid; gap: 0.5rem; font-size: 0.8rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">PAN:</strong> Hasta 10 m (Bluetooth, Zigbee)
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">LAN:</strong> Edificio local (Ethernet, Wi-Fi)
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #a78bfa;">CAN:</strong> Campus universitario contiguo
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #fbbf24;">MAN:</strong> Cobertura metropolitana (Ciudad)
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #f87171;">WAN:</strong> Enlace global interurbano / ISP
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #ec4899;">SAN:</strong> Storage Area Network (Fibre Channel)
+              </div>
+            </div>
+            <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.78rem;">
+              <strong style="color: #38bdf8;">Por Ámbito de Seguridad:</strong>
+              <strong>Intranet</strong> (red interna privada corporativa), <strong>Extranet</strong> (acceso seguro vía VPN a socios comerciales o proveedores) e <strong>Internet</strong> (red global pública sin fronteras).
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.4 Topologías & Métricas de Desempeño (QoS) -->
+        <div class="calc-results-card">
+          <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>📐</span> 1.4 Topologías Físicas vs Lógicas & Métricas de Red
+          </h4>
+          <div style="font-size: 0.8rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0.6rem;">
+            <div><strong style="color: var(--text-main);">Topología Física:</strong> Disposición real de medios y hardware (cableado en estrella hacia el switch).</div>
+            <div><strong style="color: var(--text-main);">Topología Lógica:</strong> Ruta que siguen las tramas a nivel de señal (ej. un hub crea una topología física en estrella pero lógica en bus).</div>
+            <div style="margin-top: 0.4rem; background: #0f172a; padding: 0.5rem; border-radius: 6px; border: 1px solid #1e293b;">
+              <span style="color: #38bdf8; font-weight: bold;">Fórmula de Malla Completa (Full Mesh):</span>
+              <div style="font-family: monospace; color: #f8fafc; font-size: 0.9rem; margin-top: 0.2rem;">Enlaces Físicos = n · (n - 1) / 2</div>
+              <span style="font-size: 0.75rem; color: #94a3b8;">Máxima redundancia y cero puntos únicos de fallo; costo de cableado cuadrático $O(n^2)$.</span>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem;">
+            <div style="background: var(--bg-card); padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--border);">
+              <strong style="color: #38bdf8;">Throughput:</strong> Tasa de transferencia real neta
+            </div>
+            <div style="background: var(--bg-card); padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--border);">
+              <strong style="color: #34d399;">Latencia (RTT):</strong> Tiempo ida y vuelta en ms
+            </div>
+            <div style="background: var(--bg-card); padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--border);">
+              <strong style="color: #fbbf24;">Jitter:</strong> Variación del retardo (&lt;30ms VoIP)
+            </div>
+            <div style="background: var(--bg-card); padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--border);">
+              <strong style="color: #f87171;">Packet Loss:</strong> % paquetes descartados (&lt;1%)
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quiz Unidad 1 -->
+      <div id="quiz-u1-container"></div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- VISTA UNIDAD 2: NORMAS, ESTÁNDARES, OSI, TCP/IP & ENCAPSULAMIENTO -->
+    <!-- ============================================================== -->
+    <section id="view-u2" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">UNIDAD 2 • TEMAS 2.1 AL 2.4</span>
+            <h2><span>📑</span> Modelos de Referencia & Flujo de Encapsulamiento</h2>
+            <p>Comprende la correspondencia entre las 7 capas del Modelo OSI y las 4 capas de la arquitectura TCP/IP en tiempo real.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-sm btn-accent" onclick="App.navigateTo('labs'); NetworkLabs.selectLab('u2');"><span>🧪</span> Zona de Práctica U2 (Pila OSI / TCP-IP) →</button>
+            <span style="font-size: 0.82rem; color: var(--text-dim);">Protocolo de prueba:</span>
+            <button class="btn btn-sm btn-primary" onclick="encapSim.setProtocol('HTTP')">Web (HTTP:80)</button>
+            <button class="btn btn-sm" onclick="encapSim.setProtocol('DNS')">DNS (UDP:53)</button>
+            <button class="btn btn-sm" onclick="encapSim.setProtocol('FTP')">Archivos (FTP:21)</button>
+          </div>
+        </div>
+
+        <!-- Contenedor del Simulador de Encapsulamiento -->
+        <div id="encapsulation-sim-container" style="margin-bottom: 2rem;"></div>
+
+        <!-- Comparación Interactiva OSI vs TCP/IP -->
+        <div class="stack-comparison">
+          <!-- Columna OSI -->
+          <div class="stack-column">
+            <h4>Modelo OSI (ISO 7498 - 7 Capas Conceptuales)</h4>
+            
+            <div class="osi-layer layer-7">
+              <div>
+                <span class="layer-badge">Capa 7</span>
+                <strong style="margin-left: 0.5rem;">Aplicación</strong>
+              </div>
+              <span class="layer-pdu">PDU: Datos (HTTP, DNS, SSH, SMTP)</span>
+            </div>
+
+            <div class="osi-layer layer-6">
+              <div>
+                <span class="layer-badge">Capa 6</span>
+                <strong style="margin-left: 0.5rem;">Presentación</strong>
+              </div>
+              <span class="layer-pdu">PDU: Datos (TLS/SSL, JPEG, ASCII, Cifrado)</span>
+            </div>
+
+            <div class="osi-layer layer-5">
+              <div>
+                <span class="layer-badge">Capa 5</span>
+                <strong style="margin-left: 0.5rem;">Sesión</strong>
+              </div>
+              <span class="layer-pdu">PDU: Datos (Sockets, RPC, Diálogo)</span>
+            </div>
+
+            <div class="osi-layer layer-4">
+              <div>
+                <span class="layer-badge">Capa 4</span>
+                <strong style="margin-left: 0.5rem;">Transporte</strong>
+              </div>
+              <span class="layer-pdu">PDU: Segmento (TCP, UDP, Puertos)</span>
+            </div>
+
+            <div class="osi-layer layer-3">
+              <div>
+                <span class="layer-badge">Capa 3</span>
+                <strong style="margin-left: 0.5rem;">Red</strong>
+              </div>
+              <span class="layer-pdu">PDU: Paquete (IPv4, IPv6, ICMP, Routing)</span>
+            </div>
+
+            <div class="osi-layer layer-2">
+              <div>
+                <span class="layer-badge">Capa 2</span>
+                <strong style="margin-left: 0.5rem;">Enlace de Datos</strong>
+              </div>
+              <span class="layer-pdu">PDU: Trama / Frame (MAC, LLC, Switches)</span>
+            </div>
+
+            <div class="osi-layer layer-1">
+              <div>
+                <span class="layer-badge">Capa 1</span>
+                <strong style="margin-left: 0.5rem;">Física</strong>
+              </div>
+              <span class="layer-pdu">PDU: Bits (Señales, Cable UTP, Fibra)</span>
+            </div>
+          </div>
+
+          <!-- Columna TCP/IP -->
+          <div class="stack-column">
+            <h4>Modelo TCP/IP (DoD / IETF - 4 Capas Prácticas)</h4>
+            
+            <div class="osi-layer layer-7" style="height: 165px; display: flex; flex-direction: column; justify-content: center;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <div>
+                  <span class="layer-badge">Capa 4</span>
+                  <strong style="margin-left: 0.5rem;">Aplicación</strong>
+                </div>
+                <span class="layer-pdu">PDU: Datos de Usuario</span>
+              </div>
+              <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 0.6rem; text-align: left;">
+                Agrupa las capas 7, 6 y 5 de OSI. Contiene los protocolos de interacción final: HTTP/HTTPS, FTP, SMTP, DNS, DHCP, SSH.
+              </p>
+            </div>
+
+            <div class="osi-layer layer-4" style="height: 52px;">
+              <div>
+                <span class="layer-badge">Capa 3</span>
+                <strong style="margin-left: 0.5rem;">Transporte (Host-to-Host)</strong>
+              </div>
+              <span class="layer-pdu">TCP / UDP</span>
+            </div>
+
+            <div class="osi-layer layer-3" style="height: 52px;">
+              <div>
+                <span class="layer-badge">Capa 2</span>
+                <strong style="margin-left: 0.5rem;">Internet</strong>
+              </div>
+              <span class="layer-pdu">IP, ICMP, ARP, OSPF</span>
+            </div>
+
+            <div class="osi-layer layer-2" style="height: 110px; display: flex; flex-direction: column; justify-content: center;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <div>
+                  <span class="layer-badge">Capa 1</span>
+                  <strong style="margin-left: 0.5rem;">Acceso a la Red (Enlace + Físico)</strong>
+                </div>
+                <span class="layer-pdu">Tramas & Bits</span>
+              </div>
+              <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 0.5rem; text-align: left;">
+                Estándares de hardware, codificación física, tarjetas de red NIC, cables Ethernet (IEEE 802.3) y Wi-Fi (IEEE 802.11).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.3 Comité IEEE 802 & Organismos Internacionales -->
+        <div class="calc-results-card" style="margin-top: 1.5rem;">
+          <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🏛️</span> 2.1 y 2.3 Organismos de Normalización & Estándares IEEE 802
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; font-size: 0.82rem; margin-bottom: 1rem;">
+            <div style="background: var(--bg-card); padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #38bdf8;">ISO:</strong> Creador del modelo de referencia OSI (ISO 7498) y normas de calidad global.
+            </div>
+            <div style="background: var(--bg-card); padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #34d399;">IETF:</strong> Define la arquitectura de Internet y publica los RFC (Request for Comments) para TCP/IP.
+            </div>
+            <div style="background: var(--bg-card); padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #fbbf24;">ITU-T:</strong> Estandariza telecomunicaciones globales, telefonía, modems y transporte óptico (SDH/OTN).
+            </div>
+            <div style="background: var(--bg-card); padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border);">
+              <strong style="color: #f87171;">ANSI / TIA:</strong> Normas de cableado estructurado, centros de datos y canalizaciones comerciales.
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.8rem; font-size: 0.82rem;">
+            <div class="calc-item">
+              <div class="title">IEEE 802.1</div>
+              <div class="val">Bridging & VLANs</div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem;">Normas 802.1Q (VLAN Tagging de 4 bytes) y 802.1D/w (Spanning Tree Protocol para evitar bucles de capa 2).</p>
+            </div>
+            <div class="calc-item">
+              <div class="title">IEEE 802.2</div>
+              <div class="val">LLC (Control de Enlace Lógico)</div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem;">Subcapa superior de Enlace de Datos que multiplexa protocolos de red (IPv4/IPv6) sobre la subcapa MAC.</p>
+            </div>
+            <div class="calc-item">
+              <div class="title">IEEE 802.3</div>
+              <div class="val">Ethernet LAN</div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem;">Estándar universal cableado: 10BASE-T, 100BASE-TX, 1000BASE-T, 10G/40G/100G con método de acceso CSMA/CD.</p>
+            </div>
+            <div class="calc-item">
+              <div class="title">IEEE 802.11</div>
+              <div class="val">Wi-Fi (Wireless LAN)</div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem;">Redes inalámbricas RF: 802.11a/b/g/n/ac/ax (Wi-Fi 6) y 802.11be (Wi-Fi 7) con método anticolisión CSMA/CA.</p>
+            </div>
+            <div class="calc-item">
+              <div class="title">IEEE 802.15</div>
+              <div class="val">WPAN / Bluetooth / IoT</div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem;">Redes inalámbricas personales: Bluetooth 802.15.1 y redes de sensores inalámbricas Zigbee / 6LoWPAN 802.15.4.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.4 Anatomía de la Trama Ethernet & Protocolos TCP/IP -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          
+          <!-- Anatomía de Trama Ethernet IEEE 802.3 -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>📦</span> 2.4 Anatomía de la Trama Ethernet (PDU Capa 2)
+            </h4>
+            <div style="font-family: monospace; font-size: 0.75rem; background: #0f172a; padding: 0.8rem; border-radius: 6px; border: 1px solid #1e293b; color: #f8fafc; line-height: 1.6; margin-bottom: 0.8rem;">
+              <span style="color: #94a3b8;">[ Preámbulo (7B) + SFD (1B) ]</span><br>
+              <span style="color: #38bdf8;">→ MAC Destino (6 Bytes / 48 bits)</span><br>
+              <span style="color: #34d399;">→ MAC Origen (6 Bytes / 48 bits)</span><br>
+              <span style="color: #fbbf24;">→ 802.1Q VLAN Tag (Opcional, 4 Bytes)</span><br>
+              <span style="color: #a78bfa;">→ EtherType / Longitud (2 Bytes: ej. 0x0800=IPv4, 0x0806=ARP)</span><br>
+              <span style="color: #f8fafc;">→ Payload / Datos (46 a 1,500 Bytes MTU)</span><br>
+              <span style="color: #f87171;">→ FCS (Frame Check Sequence: CRC-32 de 4 Bytes)</span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+              Si una trama llega con un cálculo CRC diferente al del campo FCS, se descarta silenciosamente en la tarjeta de red (NIC) sin generar acuse de recibo.
+            </p>
+          </div>
+
+          <!-- Suite TCP vs UDP y Protocolos Auxiliares -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🔄</span> TCP vs UDP & Servicios Esenciales
+            </h4>
+            <div style="display: grid; gap: 0.6rem; font-size: 0.8rem;">
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">TCP (Transmission Control Protocol - RFC 793):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  Orientado a conexión. Establece sesión mediante <strong>3-Way Handshake (SYN → SYN-ACK → ACK)</strong>. Garantiza entrega ordenada, control de congestión y retransmisión ante pérdida (HTTP, SSH, SMTP).
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">UDP (User Datagram Protocol - RFC 768):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  No orientado a conexión. Sin acuses ni ordenamiento; cabecera ligera de solo 8 bytes. Diseñado para mínima latencia en tiempo real (VoIP, DNS, Streaming, Videojuegos).
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.75rem;">
+                <strong style="color: #fbbf24;">Protocolos Auxiliares:</strong>
+                <strong>ARP:</strong> Resuelve IP a MAC física. <strong>ICMP:</strong> Diagnóstico de red (ping, traceroute). <strong>DHCP:</strong> Asignación dinámica (Discover, Offer, Request, ACK). <strong>DNS:</strong> Traducción de FQDN a IP.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quiz Unidad 2 -->
+      <div id="quiz-u2-container"></div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- VISTA UNIDAD 3: DISPOSITIVOS DE RED, SWITCH CAM & CAPAS        -->
+    <!-- ============================================================== -->
+    <section id="view-u3" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">UNIDAD 3 • TEMAS 3.1 AL 3.5</span>
+            <h2><span>🔌</span> Dispositivos de Red Activos & Pasivos</h2>
+            <p>Analiza el comportamiento de hubs, switches (tabla CAM en vivo), routers y dispositivos de capas superiores.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-sm btn-accent" onclick="App.navigateTo('labs'); NetworkLabs.selectLab('u3');"><span>🧪</span> Zona de Práctica U3 (Switching, CAM & VLANs) →</button>
+          </div>
+        </div>
+
+        <!-- Simulador de Switch Capa 2 y Tabla CAM -->
+        <div id="switch-sim-container" style="margin-bottom: 2rem;"></div>
+
+        <!-- Tabla Comparativa por Capas -->
+        <div class="calc-results-card">
+          <h4 style="color: var(--primary-light); margin-bottom: 1rem;">
+            <span>🎯</span> Clasificación de Dispositivos por Capa de Operación OSI
+          </h4>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+            <!-- Capa 1 -->
+            <div style="background: var(--bg-card); border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 8px;">
+              <span style="font-size: 0.75rem; font-weight: bold; color: #f59e0b;">CAPA 1: FÍSICA</span>
+              <h4 style="margin: 0.3rem 0; font-size: 0.95rem;">Repetidor & Hub (Concentrador)</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                No interpretan direcciones lógicas ni físicas. Simplemente regeneran la señal eléctrica o de luz y la propagan por todos sus puertos. 
+                <strong>1 único dominio de colisión y 1 dominio de broadcast</strong>. Obsoletos por causar saturación.
+              </p>
+            </div>
+
+            <!-- Capa 2 -->
+            <div style="background: var(--bg-card); border-left: 4px solid #10b981; padding: 1rem; border-radius: 8px;">
+              <span style="font-size: 0.75rem; font-weight: bold; color: #10b981;">CAPA 2: ENLACE</span>
+              <h4 style="margin: 0.3rem 0; font-size: 0.95rem;">Switch (Conmutador) & Bridge</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                Inspeccionan direcciones físicas MAC y construyen dinámicamente la tabla CAM. 
+                <strong>Cada puerto es un dominio de colisión independiente</strong>. Eliminan colisiones en Full-Dúplex. Mantienen un único dominio de broadcast por VLAN.
+              </p>
+            </div>
+
+            <!-- Capa 3 -->
+            <div style="background: var(--bg-card); border-left: 4px solid #06b6d4; padding: 1rem; border-radius: 8px;">
+              <span style="font-size: 0.75rem; font-weight: bold; color: #06b6d4;">CAPA 3: RED</span>
+              <h4 style="margin: 0.3rem 0; font-size: 0.95rem;">Router & Switch Multicapa L3</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                Interconectan subredes disímiles examinando direcciones IP de origen y destino. Decrementan el campo TTL y consultan tablas de enrutamiento (OSPF, BGP). 
+                <strong>Separan dominios de colisión y dominios de broadcast</strong>.
+              </p>
+            </div>
+
+            <!-- Capas 4-7 -->
+            <div style="background: var(--bg-card); border-left: 4px solid #ec4899; padding: 1rem; border-radius: 8px;">
+              <span style="font-size: 0.75rem; font-weight: bold; color: #ec4899;">CAPAS 4 A 7: SUPERIORES</span>
+              <h4 style="margin: 0.3rem 0; font-size: 0.95rem;">Firewall SPI, Proxy & Balanceador</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                Inspeccionan puertos TCP/UDP, sesiones con estado, contenido HTTP/HTTPS, filtrado antivirus, prevención de intrusiones (IPS) y distribución de carga entre granjas de servidores web.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.1 Activos vs Pasivos -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;">
+            <h4 style="color: #38bdf8; font-size: 0.95rem; margin-bottom: 0.5rem;">⚡ Dispositivos Activos</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              Requieren suministro de energía eléctrica para operar. Procesan, regeneran, conmutan, amplifican o modulan las señales.
+            </p>
+            <div style="font-size: 0.78rem; color: #cbd5e1; font-family: monospace;">
+              Ejemplos: Switches gestionables, Routers, Puntos de Acceso Wi-Fi, Firewalls físicos, Tarjetas de Red (NIC), Transceivers SFP+.
+            </div>
+          </div>
+
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem;">
+            <h4 style="color: #10b981; font-size: 0.95rem; margin-bottom: 0.5rem;">🧱 Dispositivos Pasivos</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              No requieren alimentación eléctrica. Sirven de soporte físico, canalización o terminación mecánica de las señales.
+            </p>
+            <div style="font-size: 0.78rem; color: #cbd5e1; font-family: monospace;">
+              Ejemplos: Cable UTP/STP, Fibra óptica, Patch Panels, Racks y Gabinetes de 19", Rosetas, Jacks RJ-45, Canaletas, Charolas portacables.
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.2 a 3.5 Perspectiva Avanzada: Conmutación L2, Enrutamiento L3 y Seguridad L4-L7 -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          
+          <!-- Mecanismos de Conmutación de Switches L2 -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>⚡</span> 3.3 Métodos de Reenvío en Switches (Forwarding)
+            </h4>
+            <div style="display: grid; gap: 0.6rem; font-size: 0.8rem;">
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Store-and-Forward (Almacenamiento y Reenvío):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  Recibe la trama completa de 64 a 1518 bytes y verifica la integridad matemática del campo FCS (CRC-32). Si hay error la descarta inmediatamente. Mayor confiabilidad, estándar en redes modernas.
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">Cut-Through (Corte Directo):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  Reenvía la trama en cuanto lee los primeros 6 bytes de la MAC destino sin esperar al resto ni verificar el FCS. Latencia ultra baja para trading de alta frecuencia o data centers.
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #fbbf24;">Fragment-Free:</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  Lee los primeros 64 bytes (longitud mínima de trama en Ethernet) para filtrar tramas colisionadas enanas (runts) antes de reenviar.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- L3 Enrutamiento, NAT/PAT & Cortafuegos -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🛡️</span> 3.4 y 3.5 Routers, NAT/PAT & Dispositivos L4-L7
+            </h4>
+            <div style="display: grid; gap: 0.6rem; font-size: 0.8rem;">
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Enrutamiento L3 & Longest Prefix Match (LPM):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  El router analiza la IP destino y elige la ruta con la máscara de subred más específica. Decrementa el campo TTL en 1; si llega a 0, descarta el paquete y responde ICMP Time Exceeded (RFC 792).
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">NAT vs PAT (Sobrecarga de NAT):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  NAT traduce direcciones IP. <strong>PAT (Port Address Translation)</strong> multiplexa miles de hosts privados (RFC 1918) sobre una única dirección IP pública asignando puertos TCP/UDP efímeros únicos.
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #f87171;">Seguridad L4-L7 (SPI, NGFW & Balanceadores):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  Firewalls de Inspección de Estado (SPI) analizan secuencias TCP; NGFW inspecciona contenido en capa 7 (antivirus, prevención de intrusiones IPS); los balanceadores L7 distribuyen tráfico HTTP basándose en URLs y cookies.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quiz Unidad 3 -->
+      <div id="quiz-u3-container"></div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- VISTA UNIDAD 4: CABLEADO ESTRUCTURADO & BANCO DE CRIMPEADO     -->
+    <!-- ============================================================== -->
+    <section id="view-u4" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">UNIDAD 4 • TEMAS 4.1 AL 4.3</span>
+            <h2><span>🛠️</span> Cableado Estructurado & Taller de Crimpeado RJ-45</h2>
+            <p>Aprende la combinación de 8 hilos para normas T568A / T568B y prueba la continuidad con el tester digital virtual.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-sm btn-accent" onclick="App.navigateTo('labs'); NetworkLabs.selectLab('u4');"><span>🧪</span> Zona de Práctica U4 (Certificación Fluke DSX) →</button>
+          </div>
+        </div>
+
+        <!-- Contenedor del Simulador de Ponchado y Tester de LEDs -->
+        <div id="crimp-sim-container" style="margin-bottom: 2rem;"></div>
+
+        <!-- Los 6 Subsistemas de Cableado Estructurado -->
+        <div class="calc-results-card">
+          <h4 style="color: var(--primary-light); margin-bottom: 1rem;">
+            <span>🏢</span> Los 6 Subsistemas del Cableado Estructurado (ANSI/TIA/EIA-568)
+          </h4>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; font-size: 0.82rem;">
+            <div class="calc-item">
+              <div class="title">1. Entrada a los Servicios (EF)</div>
+              <div class="val" style="font-size: 0.85rem; color: #f8fafc;">Entrance Facility</div>
+              <p style="color: var(--text-dim); margin-top: 0.3rem;">Punto de demarcación donde ingresan los cables de los proveedores de telecomunicaciones (ISP, telefonía) al edificio.</p>
+            </div>
+
+            <div class="calc-item">
+              <div class="title">2. Cuarto de Equipos (ER)</div>
+              <div class="val" style="font-size: 0.85rem; color: #f8fafc;">Equipment Room (MDF)</div>
+              <p style="color: var(--text-dim); margin-top: 0.3rem;">Espacio centralizado con control ambiental estricto que alberga servidores principales, PBX, routers de borde y conmutadores de núcleo.</p>
+            </div>
+
+            <div class="calc-item">
+              <div class="title">3. Cableado Troncal (Backbone)</div>
+              <div class="val" style="font-size: 0.85rem; color: #f8fafc;">Backbone Cabling</div>
+              <p style="color: var(--text-dim); margin-top: 0.3rem;">Interconexión vertical entre el Cuarto de Equipos y los Cuartos de Telecomunicaciones de cada piso (usualmente fibra óptica monomodo o multimodo OM4).</p>
+            </div>
+
+            <div class="calc-item">
+              <div class="title">4. Cuarto de Telecomunicaciones (TR)</div>
+              <div class="val" style="font-size: 0.85rem; color: #f8fafc;">Telecommunications Room (IDF)</div>
+              <p style="color: var(--text-dim); margin-top: 0.3rem;">Área de servicio por piso donde terminan los cables horizontales en patch panels y se ubican los switches de acceso para la distribución local.</p>
+            </div>
+
+            <div class="calc-item">
+              <div class="title">5. Cableado Horizontal</div>
+              <div class="val" style="font-size: 0.85rem; color: #f8fafc;">Horizontal Cabling</div>
+              <p style="color: var(--text-dim); margin-top: 0.3rem;">Desde el patch panel del TR hasta las tomas de salida de telecomunicaciones (Rosetas/Jacks RJ-45). <strong>Límite normativo estricto: 90 metros de enlace permanente + 10 metros para patch cords</strong>.</p>
+            </div>
+
+            <div class="calc-item">
+              <div class="title">6. Área de Trabajo (WA)</div>
+              <div class="val" style="font-size: 0.85rem; color: #f8fafc;">Work Area</div>
+              <p style="color: var(--text-dim); margin-top: 0.3rem;">Espacio donde el usuario conecta sus estaciones de trabajo, impresoras de red o teléfonos IP a las rosetas mediante cordones de parcheo flexibles (máximo 5m).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Normas ANSI/TIA/EIA Relevantes -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; margin-top: 1.5rem;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; font-size: 0.82rem;">
+            <strong style="color: #38bdf8;">TIA/EIA-568-C/D:</strong> Estándar de cableado para edificios comerciales (rendimiento Cat 5e, 6, 6A, 8 y conectores).
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; font-size: 0.82rem;">
+            <strong style="color: #34d399;">TIA/EIA-569:</strong> Estándar para rutas y espacios de telecomunicaciones (ductos, charolas, radios de curvatura).
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; font-size: 0.82rem;">
+            <strong style="color: #fbbf24;">TIA/EIA-606:</strong> Estándar de administración y etiquetado de cables, racks, puertos y registros técnicos.
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; font-size: 0.82rem;">
+            <strong style="color: #f87171;">TIA/EIA-607:</strong> Requerimientos de puesta a tierra y unión física para telecomunicaciones de edificios.
+          </div>
+        </div>
+
+        <!-- 4.2 y 4.3 Medios de Transmisión & Certificación Fluke -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          
+          <!-- Categorías UTP vs Fibra Óptica -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🔌</span> 4.2 Medios Físicos: Cobre vs Fibra Óptica
+            </h4>
+            <div style="display: grid; gap: 0.5rem; font-size: 0.78rem;">
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Cat 5e (100 MHz):</strong> Hasta 1 Gbps a 100 metros.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">Cat 6 (250 MHz):</strong> 1 Gbps a 100 m / 10 Gbps limitado a 37-55 m. Incorpora cruceta plástica separadora de pares.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #fbbf24;">Cat 6A (500 MHz):</strong> 10 Gbps a 100 metros completos. Blindaje robusto contra Alien Crosstalk (ANEXT).
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #f87171;">Cat 8 (2000 MHz):</strong> 25 Gbps / 40 Gbps hasta 30 metros para centros de datos (top-of-rack).
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #ec4899;">Fibra Óptica:</strong> 
+                <strong>Monomodo (SMF - OS1/OS2):</strong> Núcleo 9 µm, láser 1310/1550 nm, distancias &gt;10 km. 
+                <strong>Multimodo (MMF - OM3/OM4/OM5):</strong> Núcleo 50 µm, VCSEL 850 nm, backbones de campus hasta 550 metros.
+              </div>
+            </div>
+          </div>
+
+          <!-- Pruebas de Certificación con Certificador de Campo (Fluke) -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>📉</span> 4.3 Parámetros de Certificación Fluke (TIA-568)
+            </h4>
+            <div style="display: grid; gap: 0.5rem; font-size: 0.78rem;">
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Mapa de Cableado (Wiremap):</strong> Verifica continuidad pin a pin, detectando circuitos abiertos, cortocircuitos, pares invertidos, cruzados o divididos (split pairs).
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">Atenuación / Pérdida de Inserción:</strong> Pérdida de amplitud de señal en dB conforme aumenta la distancia y frecuencia.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #fbbf24;">NEXT (Paradiafonía cercana):</strong> Interferencia electromagnética inducida entre pares adyacentes en el extremo transmisor.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #f87171;">Pérdida de Retorno (Return Loss):</strong> Ruido de señal reflejada por variaciones de impedancia respecto a 100 Ω.
+              </div>
+              <div style="background: #0f172a; padding: 0.5rem; border-radius: 4px; border: 1px solid #1e293b; color: #fde047;">
+                <strong>⚠️ Regla de Oro TIA:</strong> No des-trenzar los pares más de <strong>13 mm (0.5 pulgadas)</strong> al ponchar el conector RJ-45 o jack para evitar fallas críticas de NEXT.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quiz Unidad 4 -->
+      <div id="quiz-u4-container"></div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- VISTA UNIDAD 5: PLANIFICACIÓN, DISEÑO & MEMORIA TÉCNICA        -->
+    <!-- ============================================================== -->
+    <section id="view-u5" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">UNIDAD 5 • UNIDAD INTEGRADORA (5.1 AL 5.7)</span>
+            <h2><span>🏗️</span> Planificación, Diseño & Memoria Técnica de Red</h2>
+            <p>Aplica la metodología ingenieril para dimensionar cuartos de telecomunicaciones, subredes IPv4 y generar la memoria técnica formal.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-accent" onclick="App.navigateTo('labs'); NetworkLabs.selectLab('u5');">
+              <span>🧪</span> Zona de Práctica U5 (Diseño VLSM, PoE & FHRP) →
+            </button>
+            <button class="btn btn-primary" onclick="App.printTechnicalMemory()">
+              <span>🖨️</span> Imprimir / Exportar Memoria Técnica (PDF)
+            </button>
+          </div>
+        </div>
+
+        <!-- Módulo 1: Calculadora de Subredes IPv4 VLSM -->
+        <div class="calc-results-card" style="margin-bottom: 2rem;">
+          <h3 style="color: var(--primary-light); font-size: 1.15rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>🔢</span> 5.4 Calculadora Rápida de Direccionamiento IPv4 y Subredes
+          </h3>
+
+          <div class="subnet-grid">
+            <div>
+              <div class="form-group">
+                <label>Dirección IP de Red o Host:</label>
+                <input type="text" class="form-control" id="calc-ip" value="192.168.100.0" placeholder="Ej. 192.168.1.0">
+              </div>
+
+              <div class="form-group">
+                <label>Máscara de Subred (Prefijo CIDR):</label>
+                <select class="form-control" id="calc-cidr">
+                  <option value="24">/24 - 255.255.255.0 (254 hosts)</option>
+                  <option value="25">/25 - 255.255.255.128 (126 hosts)</option>
+                  <option value="26" selected>/26 - 255.255.255.192 (62 hosts)</option>
+                  <option value="27">/27 - 255.255.255.224 (30 hosts)</option>
+                  <option value="28">/28 - 255.255.255.240 (14 hosts)</option>
+                  <option value="29">/29 - 255.255.255.248 (6 hosts)</option>
+                  <option value="30">/30 - 255.255.255.252 (2 hosts punto a punto)</option>
+                  <option value="16">/16 - 255.255.0.0 (65,534 hosts)</option>
+                  <option value="8">/8 - 255.0.0.0 (16.7 Millones de hosts)</option>
+                </select>
+              </div>
+
+              <button class="btn btn-primary" id="calc-btn-run" style="width: 100%;">
+                <span>⚙️</span> Calcular Subred
+              </button>
+            </div>
+
+            <!-- Resultados del cálculo -->
+            <div>
+              <div class="calc-grid-results">
+                <div class="calc-item">
+                  <div class="title">Dirección de Red:</div>
+                  <div class="val" id="res-net-ip">192.168.100.0</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Máscara Decimal:</div>
+                  <div class="val" id="res-mask-ip">255.255.255.192 (/26)</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Dirección de Broadcast:</div>
+                  <div class="val" id="res-bcast-ip">192.168.100.63</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Primer Host Útil:</div>
+                  <div class="val" id="res-first-host">192.168.100.1</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Último Host Útil:</div>
+                  <div class="val" id="res-last-host">192.168.100.62</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Hosts Útiles Asignables:</div>
+                  <div class="val" id="res-usable-hosts" style="color: #34d399;">62</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Total de Direcciones en Bloque:</div>
+                  <div class="val" id="res-total-hosts">64</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Clase y Ámbito:</div>
+                  <div class="val" id="res-ip-type" style="font-size: 0.8rem;">C - Privada (RFC 1918)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Módulo 2: Dimensionador de Cuarto de Telecomunicaciones y Racks -->
+        <div class="calc-results-card" style="margin-bottom: 2rem;">
+          <h3 style="color: var(--primary-light); font-size: 1.15rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>🗄️</span> 5.2 Dimensionamiento de Infraestructura de Rack (Unidades U)
+          </h3>
+
+          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;">
+            <div>
+              <div class="form-group">
+                <label>Número de Áreas de Trabajo (Puestos):</label>
+                <input type="number" class="form-control" id="rack-wa-count" value="48" min="1" max="1000">
+              </div>
+
+              <div class="form-group">
+                <label>Servicios por Área de Trabajo:</label>
+                <select class="form-control" id="rack-drops-per-wa">
+                  <option value="2" selected>2 servicios (1 Voz + 1 Datos)</option>
+                  <option value="3">3 servicios (1 Voz + 1 Datos + 1 Aux/Cámara)</option>
+                  <option value="4">4 servicios (Alta densidad)</option>
+                </select>
+              </div>
+
+              <button class="btn btn-accent" id="rack-calc-btn" style="width: 100%;">
+                <span>📐</span> Calcular Dimensiones del Rack
+              </button>
+            </div>
+
+            <div>
+              <div class="calc-grid-results">
+                <div class="calc-item">
+                  <div class="title">Total Puntos de Red (Drops):</div>
+                  <div class="val" id="rack-res-drops">96 servicios (Jacks RJ-45 Cat 6)</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Paneles de Parcheo Requeridos:</div>
+                  <div class="val" id="rack-res-pp">4 paneles de 24 puertos (8U con pasacables)</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Switches de Acceso Necesarios:</div>
+                  <div class="val" id="rack-res-sw">4 switches Gigabit PoE de 24 puertos</div>
+                </div>
+                <div class="calc-item">
+                  <div class="title">Unidades de Rack (U) Totales:</div>
+                  <div class="val" id="rack-res-units" style="color: #38bdf8;">21U ocupadas (28U con holgura)</div>
+                </div>
+                <div class="calc-item" style="grid-column: span 2;">
+                  <div class="title">Recomendación de Gabinete / Rack Estándar 19":</div>
+                  <div class="val" id="rack-res-rec" style="color: #34d399;">Rack de Piso Estándar de 42U o 45U (19 pulgadas)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perspectiva de Ingeniería de Redes: PPDIOO, PoE, 3 Capas y Redundancia -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          
+          <!-- Metodología PPDIOO & Presupuesto PoE -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>📐</span> 5.1 Ciclo de Vida PPDIOO & Presupuesto PoE
+            </h4>
+            <div style="display: grid; gap: 0.5rem; font-size: 0.8rem;">
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Metodología PPDIOO (Cisco):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  <strong>P</strong>lanear (levantamiento) → <strong>D</strong>iseñar (topología y direccionamiento) → <strong>I</strong>mplementar (instalación) → <strong>O</strong>perar (monitoreo 24/7) → <strong>O</strong>ptimizar (proactividad).
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">Presupuesto de Potencia PoE (Power Budget):</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  • <strong>PoE (802.3af):</strong> 15.4 W por puerto (Teléfonos IP básicos)<br>
+                  • <strong>PoE+ (802.3at):</strong> 30 W por puerto (Puntos de Acceso Wi-Fi 6, Cámaras PTZ)<br>
+                  • <strong>PoE++ (802.3bt):</strong> 60 W a 90 W por puerto (Pantallas digitales, terminales POS)<br>
+                  <em>Cálculo: Potencia Total Fuente = Σ (Dispositivos × Watts requeridos) + 20% margen.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modelo Jerárquico de 3 Capas & Alta Disponibilidad -->
+          <div class="calc-results-card">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>🏢</span> 5.2 Arquitectura Jerárquica & FHRP
+            </h4>
+            <div style="display: grid; gap: 0.5rem; font-size: 0.8rem;">
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #f87171;">Capa de Núcleo (Core):</strong> Conmutación a velocidad de cable (Gigabit/10G/40G) sin filtrado de paquetes intensivo para latencia mínima.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #fbbf24;">Capa de Distribución:</strong> Agregación de tráfico, políticas de seguridad (ACLs), enrutamiento entre VLANs y control de dominios de broadcast.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #34d399;">Capa de Acceso:</strong> Conexión de equipos terminales, seguridad de puertos (Port Security 802.1X) y etiquetado QoS.
+              </div>
+              <div style="background: var(--bg-card); padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Redundancia de Gateway (FHRP):</strong> Protocolos HSRP y VRRP evitan el punto único de falla (SPOF) compartiendo una IP virtual entre dos routers.
+              </div>
+            </div>
+          </div>
+
+          <!-- Racks, Climatización y Energía Ininterrumpida -->
+          <div class="calc-results-card" style="grid-column: 1 / -1;">
+            <h4 style="color: var(--primary-light); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>❄️</span> 5.3 Climatización (BTU/h) & Respaldo Eléctrico (UPS Online)
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; font-size: 0.8rem;">
+              <div style="background: var(--bg-card); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #38bdf8;">Cálculo de Disipación Térmica:</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  1 Watt de consumo equivale a <strong>3.4121 BTU/h</strong>. Para un cuarto de telecomunicaciones con 2,000 Watts de carga activa:<br>
+                  <code style="color: #34d399;">BTU/h = 2,000 W × 3.4121 = 6,824.2 BTU/h</code> (Requiere minisplit de precisión de al menos 12,000 BTU/h o 1 tonelada de refrigeración).
+                </p>
+              </div>
+              <div style="background: var(--bg-card); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: #fbbf24;">UPS Online de Doble Conversión:</strong>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                  Transforma continuamente corriente alterna (AC) a continua (DC) y de vuelta a alterna senoidal pura. <strong>Tiempo de transferencia: 0 milisegundos</strong> ante caídas de la red eléctrica comercial.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;" id="printable-tech-memory">
+          <div style="border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <h3 style="color: #f8fafc; font-size: 1.2rem;">MEMORIA TÉCNICA DEL PROYECTO DE RED ORGANIZACIONAL</h3>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">
+                UNIVERSIDAD AZTLÁN • FACULTAD DE INGENIERÍA EN SISTEMAS COMPUTACIONALES
+              </p>
+            </div>
+            <div style="text-align: right; font-size: 0.75rem; color: var(--text-dim);">
+              DOCUMENTO OFICIAL DE LIBERACIÓN<br>
+              NORMA ANSI/TIA/EIA-606-B
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; font-size: 0.82rem; margin-bottom: 1.2rem;">
+            <div>
+              <strong style="color: var(--primary-light);">Organización / Cliente:</strong> Campus Universitario Central<br>
+              <strong style="color: var(--primary-light);">Responsable Técnico:</strong> Ingeniero en Sistemas Certificado<br>
+              <strong style="color: var(--primary-light);">Topología de Red:</strong> Jerárquica en Árbol (Núcleo, Distribución, Acceso)
+            </div>
+            <div>
+              <strong style="color: var(--primary-light);">Medio Físico Horizontal:</strong> Cable UTP Categoría 6, 250 MHz, 1 Gbps<br>
+              <strong style="color: var(--primary-light);">Medio Físico Troncal:</strong> Fibra Óptica OM4 Multimodo 50/125 µm, 10 Gbps<br>
+              <strong style="color: var(--primary-light);">Estándar de Terminación:</strong> ANSI/TIA/EIA-568B
+            </div>
+          </div>
+
+          <div style="background: #020617; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-size: 0.8rem; font-family: monospace; color: #cbd5e1; line-height: 1.6;">
+            <strong>RESUMEN DE PRUEBAS DE CERTIFICACIÓN Y LIBERACIÓN (TIA-568.2-D):</strong><br>
+            • Mapa de Cableado (Wiremap): 100% APROBADO (Sin pares divididos, abiertos ni cruzados)<br>
+            • Longitud Máxima Registrada: 74.2 metros (Dentro del límite normativo de 90m)<br>
+            • Paradifonía Extremo Cercano (NEXT): Margen favorable +6.8 dB (PASS)<br>
+            • Pérdida de Retorno (Return Loss): Margen favorable +4.2 dB (PASS)<br>
+            • Puesta a Tierra (TIA-607): Resistencia a tierra medida menor a 5 Ohms en barra TMGB.<br>
+            • Estado Final del Proyecto: <strong>LIBERADO Y CERTIFICADO PARA PRODUCCIÓN</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Unidad 5 -->
+      <div id="quiz-u5-container"></div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- VISTA EXAMEN FINAL & EVALUACIÓN INTEGRAL                       -->
+    <!-- ============================================================== -->
+    <section id="view-exam" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">EVALUACIÓN Y RÚBRICA INSTITUCIONAL</span>
+            <h2><span>📝</span> Simulador de Examen Final Integrador</h2>
+            <p>25 reactivos contextualizados basados en los objetivos de la asignatura y competencias del perfil de egreso.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-primary" onclick="App.gradeFinalExam()">
+              <span>✅</span> Calificar Examen y Calcular Acreditación
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Resultado del Examen -->
+        <div id="final-exam-result" style="display: none; margin-bottom: 2rem;"></div>
+
+        <!-- Lista de las 25 preguntas generadas dinámicamente -->
+        <div id="final-exam-questions-list"></div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <button class="btn btn-primary" style="padding: 0.8rem 2rem; font-size: 1rem;" onclick="App.gradeFinalExam()">
+            <span>✅</span> Enviar Respuestas y Obtener Calificación Final
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- VISTA TALLER DE EJERCICIOS VISUALES (100 PRÁCTICAS: 20 POR UNIDAD) -->
+    <!-- ============================================================== -->
+    <section id="view-workshop" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-light);">ENTORNO DE PRÁCTICA ACTIVA • UNIDADES 1 A 5 (100 EJERCICIOS)</span>
+            <h2><span>🎯</span> Taller de Ejercicios Visuales Paso a Paso</h2>
+            <p>Selecciona cualquier ejercicio del catálogo para practicar de forma visual e interactiva cada tema del temario oficial.</p>
+          </div>
+          <div class="controls-toolbar">
+            <div class="stat-pill">
+              <span>Progreso del Taller:</span>
+              <strong id="ex-completed-count" style="color: var(--accent);">0 de 100 (0%)</strong>
+              <div class="progress-bar-mini">
+                <div class="progress-bar-mini-fill" id="ex-progress-bar-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exercise-layout">
+          <!-- Barra Lateral con Lista de Ejercicios -->
+          <div class="exercise-sidebar">
+            <div class="exercise-sidebar-header">
+              <h3><span>📋</span> Catálogo de Ejercicios</h3>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">100 prácticas interactivas (20 por unidad)</p>
+            </div>
+            <div id="exercise-sidebar-list"></div>
+          </div>
+
+          <!-- Escenario de Trabajo del Ejercicio Seleccionado -->
+          <div class="exercise-stage" id="exercise-stage-container">
+            <div style="background: #131d31; border: 1px solid #243552; border-radius: 12px; padding: 2rem; text-align: center;">
+              <p style="color: #94a3b8;">Cargando ejercicio interactivo...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- VISTA EXCLUSIVA: PANEL DOCENTE & GESTIÓN ACADÉMICA (GARIBALDI)  -->
+    <!-- ============================================================== -->
+    <section id="view-admin" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: #f59e0b;">MÓDULO DE GESTIÓN Y AUDITORÍA DOCENTE</span>
+            <h2><span>👑</span> Panel de Control del Super Administrador</h2>
+            <p>Bienvenido, <strong>Prof. Luis Alberto Garibaldi</strong>. Aquí puedes monitorear el desempeño de tus estudiantes, modificar notas y exportar actas oficiales.</p>
+          </div>
+          <div class="controls-toolbar">
+            <button class="btn btn-primary" onclick="window.print()">
+              <span>🖨️</span> Imprimir Acta de Calificaciones
+            </button>
+            <button class="btn btn-sm" onclick="AuthSystem.showCredentialsModal()">
+              <span>🔑</span> Ver Accesos de Alumnos
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjetas de Resumen General del Grupo -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <div class="calc-item" style="border-left: 4px solid #38bdf8;">
+            <div class="title">Estudiantes Asignados:</div>
+            <div class="val" style="color: #38bdf8;">2 Alumnos</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 0.2rem;">Mario Leyva Mendez & Isaias Lopez Meza</div>
+          </div>
+          <div class="calc-item" style="border-left: 4px solid #10b981;">
+            <div class="title">Prácticas Visuales Disponibles:</div>
+            <div class="val" style="color: #10b981;">100 Laboratorios (20 por Unidad)</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 0.2rem;">Unidades 1 a 5</div>
+          </div>
+          <div class="calc-item" style="border-left: 4px solid #f59e0b;">
+            <div class="title">Estatus de Evaluación:</div>
+            <div class="val" style="color: #f59e0b;">En Curso</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 0.2rem;">Ciclo Noviembre-Diciembre 2026</div>
+          </div>
+        </div>
+
+        <!-- Tabla de Auditoría en Vivo de Estudiantes -->
+        <div class="calc-results-card" style="margin-bottom: 2rem;">
+          <h3 style="color: var(--primary-light); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>📊</span> Registro y Seguimiento Individual de Alumnos
+          </h3>
+
+          <div style="overflow-x: auto;">
+            <table class="teacher-audit-table">
+              <thead>
+                <tr>
+                  <th>Matrícula</th>
+                  <th>Nombre del Estudiante</th>
+                  <th>Prácticas (30%)</th>
+                  <th>Lecturas (20%)</th>
+                  <th>Quizzes U1-U5 (20%)</th>
+                  <th>Examen Final (30%)</th>
+                  <th>Promedio Final</th>
+                  <th>Estatus</th>
+                  <th>Acción Docente</th>
+                </tr>
+              </thead>
+              <tbody id="teacher-students-tbody">
+                <tr>
+                  <td><code>AZT-2026-63401</code></td>
+                  <td><strong>Mario Leyva Mendez</strong></td>
+                  <td><span id="adm-mario-pracs">0 / 100 (0%)</span></td>
+                  <td><span>0%</span></td>
+                  <td><span id="adm-mario-quiz">0%</span></td>
+                  <td><span id="adm-mario-exam">--</span></td>
+                  <td><strong style="color: #38bdf8;" id="adm-mario-final">En Curso</strong></td>
+                  <td><span class="status-badge pending">UNIDAD 1</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-primary" onclick="alert('Expediente de Mario Leyva Mendez auditado. Estado: Cursando Unidad 1.')">Auditar</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>AZT-2026-63402</code></td>
+                  <td><strong>Isaias Lopez Meza</strong></td>
+                  <td><span id="adm-isaias-pracs">0 / 100 (0%)</span></td>
+                  <td><span>0%</span></td>
+                  <td><span id="adm-isaias-quiz">0%</span></td>
+                  <td><span id="adm-isaias-exam">--</span></td>
+                  <td><strong style="color: #38bdf8;" id="adm-isaias-final">En Curso</strong></td>
+                  <td><span class="status-badge pending">UNIDAD 1</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-primary" onclick="alert('Expediente de Isaias Lopez Meza auditado. Estado: Cursando Unidad 1.')">Auditar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Gestión y Respaldo de Contraseñas de Estudiantes (Solo Super Admin) -->
+        <div class="calc-results-card" style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <h3 style="color: #38bdf8; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🔐</span> Gestión y Respaldo de Contraseñas de Estudiantes
+              </h3>
+              <p style="font-size: 0.82rem; color: #94a3b8; margin-top: 0.2rem;">
+                Si un estudiante olvida su clave, aquí puedes consultarla o asignarle una nueva contraseña personalizada.
+              </p>
+            </div>
+          </div>
+
+          <div id="admin-password-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem;"></div>
+        </div>
+
+        <!-- Ajuste de Ponderaciones de la Rúbrica Oficial Aztlán -->
+        <div class="calc-results-card">
+          <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>⚙️</span> Configuración de Ponderación de Rúbrica (Solo Super Admin)
+          </h3>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem;">
+            Como docente titular puedes ajustar los porcentajes de evaluación si la coordinación académica lo autoriza:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label>Reportes de Lectura (%):</label>
+              <input type="number" class="form-control" id="adm-rubric-reading" value="20" min="0" max="100">
+            </div>
+            <div class="form-group">
+              <label>Investigación & Prácticas (%):</label>
+              <input type="number" class="form-control" id="adm-rubric-research" value="30" min="0" max="100">
+            </div>
+            <div class="form-group">
+              <label>Exámenes Parciales (%):</label>
+              <input type="number" class="form-control" id="adm-rubric-partials" value="20" min="0" max="100">
+            </div>
+            <div class="form-group">
+              <label>Examen Final (%):</label>
+              <input type="number" class="form-control" id="adm-rubric-final" value="30" min="0" max="100">
+            </div>
+          </div>
+
+          <button class="btn btn-accent" onclick="alert('¡Ponderación de rúbrica actualizada y guardada para el grupo!');">
+            <span>💾</span> Guardar Ponderación Institucional
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- VISTA LABORATORIO DE PRÁCTICAS ACTIVAS DE RED (UNIDADES 1 A 5) -->
+    <!-- ============================================================== -->
+    <section id="view-labs" class="view-panel">
+      <div class="interactive-section">
+        <div class="section-header" style="border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+          <div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: #10b981; letter-spacing: 0.5px;">ENTORNO DE PRÁCTICA REAL DIGITAL • UNIDADES 1 A 5</span>
+            <h2><span>🧪</span> Laboratorio de Prácticas Interactivas de Red</h2>
+            <p>Pon a prueba tus conocimientos en simulaciones activas con detección de errores en tiempo real y corrección pedagógica guiada.</p>
+          </div>
+        </div>
+
+        <!-- Pestañas Selectoras de Práctica por Unidad -->
+        <div class="lab-tabs-nav" id="network-labs-tabs"></div>
+
+        <!-- Contenedor Dinámico del Laboratorio Activo -->
+        <div id="network-lab-workspace"></div>
+      </div>
+    </section>
+
+    <!-- Modal de Credenciales y Cuentas de Acceso -->
+    <div class="modal-backdrop" id="credentials-modal">
+      <div class="modal-content" style="max-width: 680px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
+          <h3 style="color: #38bdf8; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>🔑</span> Credenciales Oficiales de Acceso a la Plataforma
+          </h3>
+          <button class="btn btn-sm btn-danger" onclick="AuthSystem.closeCredentialsModal()">×</button>
+        </div>
+
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem;">
+          Comparte los siguientes datos con los estudiantes para que puedan iniciar sesión desde su navegador:
+        </p>
+
+        <!-- Tarjetas de Credenciales -->
+        <div style="display: grid; gap: 1rem;">
+          <!-- Super Admin -->
+          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 8px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.75rem; font-weight: bold; color: #f59e0b;">👑 SUPER ADMINISTRADOR / DOCENTE TITULAR</span>
+                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">Prof. Luis Alberto Garibaldi</h4>
+              </div>
+              <span style="font-size: 1.8rem;">👨‍🏫</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
+              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">lgaribaldi</strong></div>
+              <div>Contraseña: <strong style="color: #f59e0b; font-family: monospace;">Aztlan2026*Prof</strong></div>
+            </div>
+          </div>
+
+          <!-- Estudiante 1 -->
+          <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; border-radius: 8px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.75rem; font-weight: bold; color: #38bdf8;">👨‍💻 ESTUDIANTE DE INGENIERÍA</span>
+                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">Mario Leyva Mendez</h4>
+              </div>
+              <span style="font-size: 1.8rem;">👨‍💻</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
+              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">mleyva</strong></div>
+              <div>Contraseña: <strong style="color: #34d399; font-family: monospace;">MarioNet2026#</strong></div>
+            </div>
+          </div>
+
+          <!-- Estudiante 2 -->
+          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.75rem; font-weight: bold; color: #10b981;">👨‍🎓 ESTUDIANTE DE INGENIERÍA</span>
+                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">Isaias Lopez Meza</h4>
+              </div>
+              <span style="font-size: 1.8rem;">👨‍🎓</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
+              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">ilopez</strong></div>
+              <div>Contraseña: <strong style="color: #34d399; font-family: monospace;">IsaiasNet2026#</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 1.5rem;">
+          <button class="btn btn-primary" onclick="AuthSystem.closeCredentialsModal()">Entendido</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para Recuperación de Contraseña de Alumnos -->
+    <div class="modal-backdrop" id="forgot-password-modal">
+      <div class="modal-content" style="max-width: 520px; text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔒</div>
+        <h3 style="color: #38bdf8; font-size: 1.25rem; margin-bottom: 0.5rem;">Recuperación de Contraseña</h3>
+        <p style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 1.2rem;">
+          Por políticas de seguridad y control académico institucional, las contraseñas de los estudiantes son administradas y resguardadas por el docente titular:
+        </p>
+        <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; text-align: left;">
+          <div style="font-weight: bold; color: #f59e0b; font-size: 0.85rem;">👑 Administrador de la Asignatura:</div>
+          <div style="color: #f8fafc; font-size: 1.05rem; margin-top: 0.2rem; font-weight: bold;">Prof. Luis Alberto Garibaldi</div>
+          <div style="font-size: 0.78rem; color: #94a3b8; margin-top: 0.4rem;">
+            Solicita directamente con tu profesor tu clave de acceso. El docente puede consultar tu contraseña o asignarte una nueva desde su Panel Docente.
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="AuthSystem.closeForgotPasswordModal()">
+          Entendido
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="simulators.js"></script>
+  <script src="network_labs.js"></script>
+  <script src="auth.js"></script>
+  <script src="progression.js"></script>
+  <script src="exercises.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
