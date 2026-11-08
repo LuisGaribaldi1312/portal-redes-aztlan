@@ -518,14 +518,14 @@ const AuthSystem = {
             <button class="dropdown-item" onclick="AuthSystem.openTeacherAdminPanel()">
               <span>👑</span> Panel de Control Docente
             </button>
+            <button class="dropdown-item" onclick="AuthSystem.showCredentialsModal()">
+              <span>🔑</span> Ver Credenciales del Grupo
+            </button>
           ` : `
             <button class="dropdown-item" onclick="AuthSystem.openStudentProgressModal()">
-              <span>📊</span> Mi Expediente & Notas
+              <span>📊</span> Mi Expediente Académico & Notas
             </button>
           `}
-          <button class="dropdown-item" onclick="AuthSystem.showCredentialsModal()">
-            <span>🔑</span> Ver Mis Credenciales
-          </button>
           <button class="dropdown-item logout" onclick="AuthSystem.logout()">
             <span>🚪</span> Cerrar Sesión
           </button>
@@ -584,6 +584,15 @@ const AuthSystem = {
     this.currentUser = null;
     const menu = document.getElementById('user-dropdown-menu');
     if (menu) menu.classList.remove('open');
+
+    // Limpiar contenido confidencial de credenciales
+    const credModal = document.getElementById('credentials-modal');
+    if (credModal) credModal.classList.remove('open');
+    const credBody = document.getElementById('credentials-modal-body');
+    if (credBody) credBody.innerHTML = '';
+    const adminPassGrid = document.getElementById('admin-password-cards-grid');
+    if (adminPassGrid) adminPassGrid.innerHTML = '';
+
     this.showLoginScreen();
     if (window.AcademicProgression) {
       window.AcademicProgression.updateUIProgression();
@@ -761,15 +770,69 @@ const AuthSystem = {
     this.refreshTeacherStudentAuditTable();
   },
 
-  // Modal de credenciales para compartir
-  showCredentialsModal() {
+  openStudentProgressModal() {
     const menu = document.getElementById('user-dropdown-menu');
     if (menu) menu.classList.remove('open');
+    if (window.StudentTracker && this.currentUser) {
+      window.StudentTracker.showStudentDossier(this.currentUser.username);
+    }
+  },
+
+  // Modal de credenciales: EXCLUSIVO Y RESTRINGIDO PARA EL SUPER ADMINISTRADOR
+  showCredentialsModal() {
+    if (!this.currentUser || this.currentUser.role !== 'superadmin') {
+      alert('🔒 ACCESO RESTRINGIDO\n\nPor políticas de seguridad y privacidad institucional, las credenciales de acceso solo pueden ser consultadas por el Administrador / Docente Titular (Prof. Luis Alberto Garibaldi).\n\nLos alumnos no tienen acceso a este módulo.');
+      return;
+    }
+    const menu = document.getElementById('user-dropdown-menu');
+    if (menu) menu.classList.remove('open');
+
+    this.renderCredentialsModalContent();
 
     const modal = document.getElementById('credentials-modal');
     if (modal) {
       modal.classList.add('open');
     }
+  },
+
+  renderCredentialsModalContent() {
+    const container = document.getElementById('credentials-modal-body');
+    if (!container) return;
+
+    if (!this.currentUser || this.currentUser.role !== 'superadmin') {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: #ef4444;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
+          <h4 style="color: #f87171; font-size: 1.1rem; margin-bottom: 0.4rem;">Acceso Restringido</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem;">Las credenciales institucionales son confidenciales y solo pueden ser consultadas por el Super Administrador / Docente Titular.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = `
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem;">
+        Bienvenido <strong>Prof. Garibaldi</strong>. A continuación se muestran las cuentas de acceso institucionales asignadas para tu consulta o entrega a los estudiantes:
+      </p>
+
+      <div style="display: grid; gap: 1rem;">
+        ${this.users.map(u => `
+          <div style="background: ${u.role === 'superadmin' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(56, 189, 248, 0.1)'}; border: 1px solid ${u.role === 'superadmin' ? '#f59e0b' : '#38bdf8'}; border-radius: 8px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.75rem; font-weight: bold; color: ${u.badgeColor};">${u.roleLabel.toUpperCase()}</span>
+                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">${u.name}</h4>
+              </div>
+              <span style="font-size: 1.8rem;">${u.avatar}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
+              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">${u.username}</strong></div>
+              <div>Contraseña: <strong style="color: ${u.role === 'superadmin' ? '#f59e0b' : '#34d399'}; font-family: monospace;">${u.password}</strong></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
   },
 
   closeCredentialsModal() {

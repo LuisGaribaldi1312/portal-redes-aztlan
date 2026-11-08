@@ -350,6 +350,11 @@ const StudentTracker = {
 
   // Modal con expediente completo y desglose
   showStudentDossier(username) {
+    const currentUser = window.AuthSystem ? window.AuthSystem.currentUser : null;
+    if (currentUser && currentUser.role !== 'superadmin' && currentUser.username !== username) {
+      alert('Solo puedes consultar tu propio expediente académico.');
+      return;
+    }
     const st = this.getStudent(username);
     if (!st) return;
     const g = this.calculateGrades(st);
@@ -443,6 +448,11 @@ const StudentTracker = {
 
   // Generación e impresión de la Boleta Oficial Individual
   printStudentReport(username) {
+    const currentUser = window.AuthSystem ? window.AuthSystem.currentUser : null;
+    if (currentUser && currentUser.role !== 'superadmin' && currentUser.username !== username) {
+      alert('Solo puedes imprimir tu propia boleta oficial.');
+      return;
+    }
     const st = this.getStudent(username);
     if (!st) return;
     const g = this.calculateGrades(st);

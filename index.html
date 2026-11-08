@@ -1624,65 +1624,17 @@
       <div class="modal-content" style="max-width: 680px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;">
           <h3 style="color: #38bdf8; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>🔑</span> Credenciales Oficiales de Acceso a la Plataforma
+            <span>🔑</span> Credenciales Oficiales de Acceso (Solo Administrador)
           </h3>
-          <button class="btn btn-sm btn-danger" onclick="AuthSystem.closeCredentialsModal()">×</button>
+          <button class="btn btn-sm btn-danger" onclick="AuthSystem.closeCredentialsModal()">✕</button>
         </div>
 
-        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem;">
-          Comparte los siguientes datos con los estudiantes para que puedan iniciar sesión desde su navegador:
-        </p>
-
-        <!-- Tarjetas de Credenciales -->
-        <div style="display: grid; gap: 1rem;">
-          <!-- Super Admin -->
-          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 8px; padding: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span style="font-size: 0.75rem; font-weight: bold; color: #f59e0b;">👑 SUPER ADMINISTRADOR / DOCENTE TITULAR</span>
-                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">Prof. Luis Alberto Garibaldi</h4>
-              </div>
-              <span style="font-size: 1.8rem;">👨‍🏫</span>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
-              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">lgaribaldi</strong></div>
-              <div>Contraseña: <strong style="color: #f59e0b; font-family: monospace;">Aztlan2026*Prof</strong></div>
-            </div>
-          </div>
-
-          <!-- Estudiante 1 -->
-          <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; border-radius: 8px; padding: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span style="font-size: 0.75rem; font-weight: bold; color: #38bdf8;">👨‍💻 ESTUDIANTE DE INGENIERÍA</span>
-                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">Mario Leyva Mendez</h4>
-              </div>
-              <span style="font-size: 1.8rem;">👨‍💻</span>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
-              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">mleyva</strong></div>
-              <div>Contraseña: <strong style="color: #34d399; font-family: monospace;">MarioNet2026#</strong></div>
-            </div>
-          </div>
-
-          <!-- Estudiante 2 -->
-          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; padding: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span style="font-size: 0.75rem; font-weight: bold; color: #10b981;">👨‍🎓 ESTUDIANTE DE INGENIERÍA</span>
-                <h4 style="font-size: 1.05rem; color: #f8fafc; margin: 0.2rem 0;">Isaias Lopez Meza</h4>
-              </div>
-              <span style="font-size: 1.8rem;">👨‍🎓</span>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; margin-top: 0.8rem; background: #030712; padding: 0.6rem; border-radius: 6px;">
-              <div>Usuario: <strong style="color: #38bdf8; font-family: monospace;">ilopez</strong></div>
-              <div>Contraseña: <strong style="color: #34d399; font-family: monospace;">IsaiasNet2026#</strong></div>
-            </div>
-          </div>
+        <div id="credentials-modal-body">
+          <!-- Inyectado dinámicamente SÓLO cuando el Docente Titular está autenticado -->
         </div>
 
         <div style="text-align: right; margin-top: 1.5rem;">
-          <button class="btn btn-primary" onclick="AuthSystem.closeCredentialsModal()">Entendido</button>
+          <button class="btn btn-primary" onclick="AuthSystem.closeCredentialsModal()">Cerrar</button>
         </div>
       </div>
     </div>
