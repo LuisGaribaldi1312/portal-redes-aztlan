@@ -877,7 +877,13 @@ const App = {
     try { this.setupRackDimensioner(); } catch (e) { console.error('Error en setupRackDimensioner:', e); }
     try { this.renderQuizzes(); } catch (e) { console.error('Error en renderQuizzes:', e); }
     try { this.renderFinalExam(); } catch (e) { console.error('Error en renderFinalExam:', e); }
-    try { this.updateStatsUI(); } catch (e) { console.error('Error en updateStatsUI:', e); }
+    try { 
+    try {
+      if (window.StudentTracker) {
+        window.StudentTracker.renderAdminView();
+      }
+    } catch (e) { console.error('Error renderAdminView:', e); }
+this.updateStatsUI(); } catch (e) { console.error('Error en updateStatsUI:', e); }
 
     // Iniciar simuladores cuando se cargue la vista
     try {
@@ -1010,7 +1016,10 @@ const App = {
         }
 
         // Si se cambia al Taller, asegurar que se renderiza el ejercicio activo de inmediato
-        if (targetView === 'workshop' && window.VisualExercises) {
+                if (targetView === 'admin' && window.StudentTracker) {
+          window.StudentTracker.renderAdminView();
+        }
+if (targetView === 'workshop' && window.VisualExercises) {
           window.VisualExercises.renderExerciseList();
           if (!window.VisualExercises.currentExerciseId) {
             window.VisualExercises.loadFirstAccessibleExercise();
@@ -1165,6 +1174,10 @@ const App = {
     if (window.AcademicProgression) {
       window.AcademicProgression.recordQuizCompleted(unitKey, percentage);
     }
+    // Registrar en el Sistema Integral de Seguimiento
+    if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+      window.StudentTracker.recordQuiz(window.AuthSystem.currentUser.username, unitKey, percentage);
+    }
   },
 
   // Examen Final Integrador (20 preguntas)
@@ -1224,6 +1237,11 @@ const App = {
     const finalPct = Math.round((correct / FINAL_EXAM_QUESTIONS.length) * 100);
     this.state.scores.finalExam = finalPct;
     this.saveState();
+
+    // Registrar en el Sistema Integral de Seguimiento
+    if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+      window.StudentTracker.recordFinalExam(window.AuthSystem.currentUser.username, finalPct);
+    }
 
     const resCard = document.getElementById('final-exam-result');
     if (resCard) {

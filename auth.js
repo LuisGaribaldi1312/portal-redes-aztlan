@@ -446,6 +446,11 @@ const AuthSystem = {
     this.applyRoleRestrictions();
     this.loadStudentProfileData();
 
+    // Registrar acceso en el Sistema Integral de Seguimiento
+    if (window.StudentTracker && this.currentUser) {
+      window.StudentTracker.recordAccess(this.currentUser.username);
+    }
+
     // Actualizar bloqueos y progresión secuencial según el rol
     if (window.AcademicProgression) {
       window.AcademicProgression.updateUIProgression();

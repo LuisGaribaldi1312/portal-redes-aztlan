@@ -285,6 +285,10 @@ const AcademicProgression = {
   },
 
   // Registra que un ejercicio práctico fue completado
+  recordExerciseDone(exId) {
+    this.recordExerciseCompleted(exId);
+  },
+
   recordExerciseCompleted(exId) {
     const user = window.AuthSystem ? window.AuthSystem.currentUser : null;
     if (!user) return;

@@ -1288,6 +1288,17 @@ const VisualExercises = {
     if (window.AcademicProgression) {
       window.AcademicProgression.recordExerciseCompleted(exId);
     }
+
+    // Registrar en el Sistema Integral de Seguimiento
+    if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+      const ex = this.catalog.find(e => e.id === exId);
+      window.StudentTracker.recordExercise(
+        window.AuthSystem.currentUser.username,
+        exId,
+        ex ? ex.title : ''
+      );
+    }
+
     this.loadExercise(exId);
   },
 

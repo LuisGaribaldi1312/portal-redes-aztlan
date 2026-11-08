@@ -404,6 +404,9 @@ const NetworkLabs = {
         </p>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem; margin-top: 0.6rem; color: #cbd5e1;">
           <div style="background: #1e293b; padding: 0.3rem 0.5rem; border-radius: 4px;">RTT Latencia: <strong>0.84 ms</strong></div>
+    if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+      window.StudentTracker.recordLab(window.AuthSystem.currentUser.username, 'u1', 'Topología y Transmisión de Red');
+    }
           <div style="background: #1e293b; padding: 0.3rem 0.5rem; border-radius: 4px;">Throughput: <strong>942 Mbps</strong></div>
           <div style="background: #1e293b; padding: 0.3rem 0.5rem; border-radius: 4px;">Jitter: <strong>0.04 ms (Excelente)</strong></div>
           <div style="background: #1e293b; padding: 0.3rem 0.5rem; border-radius: 4px;">Pérdida de Paquetes: <strong>0%</strong></div>
@@ -986,7 +989,10 @@ const NetworkLabs = {
     // Misma VLAN
     box.innerHTML = `
       <div style="color: #10b981;">
-        <strong style="font-size: 0.95rem;">✓ ¡CONMUTACIÓN LOCAL CAPA 2 EXITOSA!</strong>
+        <strong style="font-size: 0.95rem;">✓ ¡CONMUTACIÓN LOCAL CAPA 2 EXITOSA
+      if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+        window.StudentTracker.recordLab(window.AuthSystem.currentUser.username, 'u3', 'Conmutación VLAN y Tabla CAM');
+      }!</strong>
         <p style="margin-top: 0.4rem; color: #a7f3d0;">
           Ambos puertos pertenecen a la <strong>VLAN ${srcVlan}</strong>. El switch consultó su tabla CAM, verificó que el Puerto ${s.dstPort} aloja la MAC destino y realizó el reenvío directo (*Forwarding*) sin generar broadcast innecesario.
         </p>
@@ -1083,6 +1089,9 @@ const NetworkLabs = {
   },
 
   runFlukeCertification() {
+    if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+      window.StudentTracker.recordLab(window.AuthSystem.currentUser.username, 'u4', 'Certificación TIA/EIA Fluke');
+    }
     const s = this.state.u4;
     const screen = document.getElementById('u4-fluke-screen');
     if (!screen) return;
@@ -1287,6 +1296,9 @@ const NetworkLabs = {
   },
 
   validateU5Project() {
+    if (window.StudentTracker && window.AuthSystem && window.AuthSystem.currentUser) {
+      window.StudentTracker.recordLab(window.AuthSystem.currentUser.username, 'u5', 'Proyecto Integrador de Red Empresarial');
+    }
     const s = this.state.u5;
     const fb = document.getElementById('u5-feedback-box');
     if (!fb) return;

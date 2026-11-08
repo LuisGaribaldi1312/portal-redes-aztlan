@@ -1024,23 +1024,57 @@ canvas {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Memory Report Print View */
+/* Official Aztlan Student Report Print Styles */
+.official-aztlan-report {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #0f172a;
+  background: #ffffff;
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 @media print {
   body {
     background: #fff !important;
     color: #000 !important;
   }
-  .top-header, .nav-tabs-wrapper, .controls-toolbar, .btn {
+  .top-header, .nav-tabs-wrapper, .controls-toolbar, .btn, .login-overlay, .modal-overlay, .welcome-toast {
     display: none !important;
   }
+
+  /* Si se imprime la boleta individual oficial */
+  #printable-student-report-container:not(:empty) {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #ffffff !important;
+    color: #000000 !important;
+    z-index: 9999999;
+  }
+
+  body:has(#printable-student-report-container:not(:empty)) main {
+    display: none !important;
+  }
+
   .view-panel {
     display: block !important;
   }
   .interactive-section, .hero-card, .calc-results-card {
-    border: 1px solid #ccc !important;
+    border: 1px solid #cbd5e1 !important;
     background: #fff !important;
     color: #000 !important;
     box-shadow: none !important;
+  }
+  .teacher-audit-table {
+    border: 1px solid #cbd5e1 !important;
+    color: #000 !important;
+  }
+  .teacher-audit-table th, .teacher-audit-table td {
+    border: 1px solid #cbd5e1 !important;
+    color: #000 !important;
   }
 }
 
