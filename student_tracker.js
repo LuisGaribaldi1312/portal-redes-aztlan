@@ -38,35 +38,224 @@ const StudentTracker = {
       finalExam: null,
       readingProgress: 0,
       activityLog: []
+    },
+    {
+      username: 'jgonzalez',
+      matricula: 'AZT-2026-63403',
+      name: 'J. González',
+      email: 'jgonzalez@aztlan.edu.mx',
+      avatar: '👨‍🎓',
+      badgeColor: '#a855f7',
+      lastAccess: 'Pendiente',
+      completedExercises: [],
+      passedQuizzes: {},
+      passedLabs: {},
+      finalExam: null,
+      readingProgress: 0,
+      activityLog: []
+    },
+    {
+      username: 'djimenez',
+      matricula: 'AZT-2026-63404',
+      name: 'D. Jiménez',
+      email: 'djimenez@aztlan.edu.mx',
+      avatar: '👨‍💻',
+      badgeColor: '#ec4899',
+      lastAccess: 'Pendiente',
+      completedExercises: [],
+      passedQuizzes: {},
+      passedLabs: {},
+      finalExam: null,
+      readingProgress: 0,
+      activityLog: []
+    },
+    {
+      username: 'dmorales',
+      matricula: 'AZT-2026-63405',
+      name: 'D. Morales',
+      email: 'dmorales@aztlan.edu.mx',
+      avatar: '👨‍🎓',
+      badgeColor: '#f97316',
+      lastAccess: 'Pendiente',
+      completedExercises: [],
+      passedQuizzes: {},
+      passedLabs: {},
+      finalExam: null,
+      readingProgress: 0,
+      activityLog: []
     }
   ],
 
+  broadcastChannel: (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel('aztlan_student_sync_channel') : null,
+  activeDossierUser: null,
+  syncInterval: null,
+
   init() {
     this.ensureInitialized();
+    this.setupSyncListeners();
+    this.renderAdminView();
+    this.startLivePolling();
   },
 
   ensureInitialized() {
+    let current = [];
     const data = localStorage.getItem(this.STORAGE_KEY);
-    if (!data) {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.defaultStudents));
+    if (data) {
+      try {
+        current = JSON.parse(data) || [];
+      } catch (e) {
+        current = [];
+      }
+    }
+    let updated = false;
+    this.defaultStudents.forEach(def => {
+      const exists = current.find(s => s.username === def.username);
+      if (!exists) {
+        current.push(JSON.parse(JSON.stringify(def)));
+        updated = true;
+      }
+    });
+    if (updated || !data) {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(current));
     }
   },
 
-  getStudents() {
-    this.ensureInitialized();
+  setupSyncListeners() {
+    // 1. Sincronización en tiempo real entre pestañas y ventanas
+    if (this.broadcastChannel) {
+      this.broadcastChannel.onmessage = (event) => {
+        if (event.data && event.data.type === 'UPDATE_STUDENTS') {
+          this.renderAdminView();
+          if (this.activeDossierUser) {
+            this.showStudentDossier(this.activeDossierUser);
+          }
+        }
+      };
+    }
+
+    // 2. Evento nativo storage (cross-tab)
+    window.addEventListener('storage', (e) => {
+      if (e.key === this.STORAGE_KEY) {
+        this.renderAdminView();
+        if (this.activeDossierUser) {
+          this.showStudentDossier(this.activeDossierUser);
+        }
+      }
+    });
+
+    // 3. Sincronización al enfocar la pestaña
+    window.addEventListener('focus', () => {
+      this.fetchCloudSync();
+    });
+  },
+
+  startLivePolling() {
+    if (this.syncInterval) clearInterval(this.syncInterval);
+    // Polling ligero cada 3.5 segundos en la nube
+    this.syncInterval = setInterval(() => {
+      const adminView = document.getElementById('view-admin');
+      if (adminView && adminView.classList.contains('active')) {
+        this.fetchCloudSync();
+      }
+    }, 3500);
+  },
+
+  // Sincronizar hacia el servidor (en segundo plano)
+  async syncWithCloud(students) {
     try {
-      const parsed = JSON.parse(localStorage.getItem(this.STORAGE_KEY));
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : this.defaultStudents;
-    } catch (e) {
-      console.error('Error al cargar alumnos:', e);
-      return this.defaultStudents;
+      if (typeof fetch !== 'undefined') {
+        fetch('/api/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(students)
+        }).catch(() => {});
+      }
+    } catch (e) {}
+  },
+
+  // Traer actualizaciones del servidor
+  async fetchCloudSync() {
+    try {
+      if (typeof fetch === 'undefined') return;
+      const res = await fetch('/api/sync');
+      if (!res.ok) return;
+      const json = await res.json();
+      if (json && Array.isArray(json.students) && json.students.length > 0) {
+        this.mergeCloudStudents(json.students);
+      }
+    } catch (e) {}
+  },
+
+  mergeCloudStudents(cloudList) {
+    const local = this.getStudents();
+    let changed = false;
+
+    cloudList.forEach(cl => {
+      const loc = local.find(s => s.username === cl.username);
+      if (loc) {
+        // Unir ejercicios resueltos
+        const prevExLen = (loc.completedExercises || []).length;
+        const setEx = new Set([...(loc.completedExercises || []), ...(cl.completedExercises || [])]);
+        loc.completedExercises = Array.from(setEx);
+        if (loc.completedExercises.length !== prevExLen) changed = true;
+
+        // Unir cuestionarios (puntaje más alto)
+        loc.passedQuizzes = loc.passedQuizzes || {};
+        if (cl.passedQuizzes) {
+          Object.keys(cl.passedQuizzes).forEach(k => {
+            if ((cl.passedQuizzes[k] || 0) > (loc.passedQuizzes[k] || 0)) {
+              loc.passedQuizzes[k] = cl.passedQuizzes[k];
+              changed = true;
+            }
+          });
+        }
+
+        // Unir laboratorios
+        if (cl.passedLabs) {
+          loc.passedLabs = { ...(loc.passedLabs || {}), ...cl.passedLabs };
+        }
+
+        // Examen final
+        if (cl.finalExam && (!loc.finalExam || cl.finalExam.score > loc.finalExam.score)) {
+          loc.finalExam = cl.finalExam;
+          changed = true;
+        }
+
+        // Último acceso
+        if (cl.lastAccess && cl.lastAccess !== 'Pendiente' && cl.lastAccess !== loc.lastAccess) {
+          loc.lastAccess = cl.lastAccess;
+          changed = true;
+        }
+
+        // Bitácora
+        if (cl.activityLog && cl.activityLog.length > (loc.activityLog || []).length) {
+          loc.activityLog = cl.activityLog;
+          changed = true;
+        }
+      } else {
+        local.push(cl);
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(local));
+      this.renderAdminView();
+      if (this.activeDossierUser) {
+        this.showStudentDossier(this.activeDossierUser);
+      }
     }
   },
 
   saveStudents(students) {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(students));
-    // Sincronizar también con la vista docente si está abierta
+    // Sincronizar en tiempo real con pestañas y vista docente
     this.renderAdminView();
+    if (this.broadcastChannel) {
+      this.broadcastChannel.postMessage({ type: 'UPDATE_STUDENTS', timestamp: Date.now() });
+    }
+    // Sincronizar con el servidor en la nube
+    this.syncWithCloud(students);
   },
 
   getStudent(username) {
@@ -350,6 +539,7 @@ const StudentTracker = {
 
   // Modal con expediente completo y desglose
   showStudentDossier(username) {
+    this.activeDossierUser = username;
     const currentUser = window.AuthSystem ? window.AuthSystem.currentUser : null;
     if (currentUser && currentUser.role !== 'superadmin' && currentUser.username !== username) {
       alert('Solo puedes consultar tu propio expediente académico.');
@@ -431,6 +621,7 @@ const StudentTracker = {
   },
 
   closeStudentDossier() {
+    this.activeDossierUser = null;
     const modal = document.getElementById('student-dossier-modal');
     if (modal) modal.classList.remove('open');
   },
@@ -615,6 +806,42 @@ const StudentTracker = {
       ];
     }
 
+    // J. González: 15 prácticas de U1 y 85% en Quiz U1
+    const jgonzalez = students.find(s => s.username === 'jgonzalez');
+    if (jgonzalez) {
+      jgonzalez.completedExercises = Array.from({ length: 15 }, (_, i) => `ex_1_${i + 1}`);
+      jgonzalez.passedQuizzes = { u1: 85 };
+      jgonzalez.passedLabs = { u1: true };
+      jgonzalez.lastAccess = 'Hoy, 09:15 p. m.';
+      jgonzalez.activityLog = [
+        { timestamp: 'Hoy 21:15', action: 'Aprobó Cuestionario Unidad 1 con 85%' },
+        { timestamp: 'Hoy 20:55', action: 'Completó práctica [U1.15] Modelo OSI vs TCP/IP' },
+        { timestamp: 'Hoy 20:10', action: 'Inicio de sesión institucional' }
+      ];
+    }
+
+    // D. Jiménez: 6 prácticas de U1
+    const djimenez = students.find(s => s.username === 'djimenez');
+    if (djimenez) {
+      djimenez.completedExercises = Array.from({ length: 6 }, (_, i) => `ex_1_${i + 1}`);
+      djimenez.lastAccess = 'Hoy, 07:45 p. m.';
+      djimenez.activityLog = [
+        { timestamp: 'Hoy 19:45', action: 'Completó práctica [U1.6] Topologías Físicas' },
+        { timestamp: 'Hoy 19:20', action: 'Inicio de sesión institucional' }
+      ];
+    }
+
+    // D. Morales: 8 prácticas de U1
+    const dmorales = students.find(s => s.username === 'dmorales');
+    if (dmorales) {
+      dmorales.completedExercises = Array.from({ length: 8 }, (_, i) => `ex_1_${i + 1}`);
+      dmorales.lastAccess = 'Hoy, 08:00 p. m.';
+      dmorales.activityLog = [
+        { timestamp: 'Hoy 20:00', action: 'Completó práctica [U1.8] Redes MAN y WAN' },
+        { timestamp: 'Hoy 19:35', action: 'Inicio de sesión institucional' }
+      ];
+    }
+
     this.saveStudents(students);
     alert('✅ Datos de avance de demostración cargados exitosamente. Ahora puedes auditar sus expedientes completos.');
   },
@@ -631,4 +858,9 @@ const StudentTracker = {
 
 if (typeof window !== 'undefined') {
   window.StudentTracker = StudentTracker;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => StudentTracker.init());
+  } else {
+    StudentTracker.init();
+  }
 }

@@ -44,6 +44,45 @@ const AuthSystem = {
       avatar: '👨‍🎓',
       badgeColor: '#10b981',
       badgeBg: 'rgba(16, 185, 129, 0.15)'
+    },
+    {
+      id: 'usr_jgonzalez',
+      username: 'jgonzalez',
+      password: 'jgonzalez',
+      name: 'J. González',
+      role: 'student',
+      roleLabel: 'Estudiante de Ingeniería en Sistemas',
+      matricula: 'AZT-2026-63403',
+      email: 'jgonzalez@aztlan.edu.mx',
+      avatar: '👨‍🎓',
+      badgeColor: '#a855f7',
+      badgeBg: 'rgba(168, 85, 247, 0.15)'
+    },
+    {
+      id: 'usr_djimenez',
+      username: 'djimenez',
+      password: 'djimenez',
+      name: 'D. Jiménez',
+      role: 'student',
+      roleLabel: 'Estudiante de Ingeniería en Sistemas',
+      matricula: 'AZT-2026-63404',
+      email: 'djimenez@aztlan.edu.mx',
+      avatar: '👨‍💻',
+      badgeColor: '#ec4899',
+      badgeBg: 'rgba(236, 72, 153, 0.15)'
+    },
+    {
+      id: 'usr_dmorales',
+      username: 'dmorales',
+      password: 'dmorales',
+      name: 'D. Morales',
+      role: 'student',
+      roleLabel: 'Estudiante de Ingeniería en Sistemas',
+      matricula: 'AZT-2026-63405',
+      email: 'dmorales@aztlan.edu.mx',
+      avatar: '👨‍🎓',
+      badgeColor: '#f97316',
+      badgeBg: 'rgba(249, 115, 22, 0.15)'
     }
   ],
 
@@ -280,7 +319,9 @@ const AuthSystem = {
     }
 
     const matched = this.users.find(u => 
-      u.username.toLowerCase() === userInp.toLowerCase() && u.password === passInp
+      (u.username.toLowerCase() === userInp.toLowerCase() || 
+       (u.email && u.email.toLowerCase() === userInp.toLowerCase())) && 
+      u.password === passInp
     );
 
     if (!matched) {
